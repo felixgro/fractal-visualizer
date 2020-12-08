@@ -21,10 +21,10 @@ export default {
 
 <style lang="scss" scoped>
 	select {
-		background: #21233b;
+		background: hsl(235, 28%, 14%);
+		border: none;
 		color: inherit;
 		padding: 7px 9px;
-		border: none;
 		&:focus {
 			outline: none;
 		}

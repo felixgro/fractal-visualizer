@@ -3,7 +3,7 @@
 		<div class="wrapper">
 			<div>
 				Fractal Visualizer
-				<small>v 0.2.0</small>
+				<small>v 0.2.1</small>
 			</div>
 			<div>
 				<dropdown :options="fractals" @selected="$emit('fractalchange', $event)" />
