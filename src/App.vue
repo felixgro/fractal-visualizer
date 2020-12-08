@@ -10,7 +10,7 @@ export default {
   name: 'App',
   mounted() {
     if(window.innerWidth < 600) {
-      alert('This Site is not optimized for Mobile - Please try again on Desktop')
+      alert('This Site is currently not optimized for Mobile - Please try on Desktop for a better experience')
     }
   }
 }

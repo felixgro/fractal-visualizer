@@ -1,14 +1,8 @@
 <template>
 	<fractal-layout>
 		<template #settings>
-			<slider label="Step" v-model:current="data.step" :max="10" :min="0" />
-			<slider label="Angle" v-model:current="data.angleDeg" :max="180" :min="1" />
-			<slider label="Trunk Ratio" v-model:current="data.trunkRatio" :max="1" :min="0" :step="0.001" />
-			<checkbox label="Random" v-model:current="data.random" :checked="data.random" />
-			<div v-if="data.random">
-				<slider label="Angle Range" v-model:current="data.angleVariety" :max="180" :min="1" />
-				<slider label="Length Range" v-model:current="data.lengthRange" :max="250" :min="1" />
-			</div>
+			<slider label="Step" v-model:current="data.step" :max="12" :min="0" />
+			<slider label="Angle (a)" v-model:current="data.angleDeg" :max="90" :min="0" />
 		</template>
 
 		<canvas ref="canvas" />
@@ -19,14 +13,12 @@
 import FractalLayout from '@/components/layouts/FractalLayout'
 import Numbers from '@/mixins/Numbers'
 import Slider from '@/components/smart/Slider'
-import Checkbox from '@/components/smart/Checkbox'
 
 export default {
 	name: 'PythagorasTee',
 	components: {
 		FractalLayout,
-		Slider,
-		Checkbox
+		Slider
 	},
 	mixins: [Numbers],
 	data() {
@@ -35,12 +27,8 @@ export default {
 			width: null,
 			data: {
 				angleDeg: 45,
-				angle: 0,
-				trunkRatio: 0.5,
-				step: 3,
-				random: false,
-				angleVariety: 35,
-				lengthRange: 90,
+				angleA: 0,
+				step: 6,
 			}
 		}
 	},
@@ -66,70 +54,55 @@ export default {
 			canvas.height = this.height
 			canvas.width = this.width
 
-			const p0 = {
-				x: this.width / 2,
-				y: this.height
-			}
+			this.data.angleA = this.degToRad(-this.data.angleDeg)
 
-			const p1 = {
-				x: this.width / 2,
-				y: 0
-			}
-
-			//this.data.angle = Math.PI / 4
-			this.data.angle = this.degToRad(this.data.angleDeg)
-
-			this.tree(ctx, p0, p1, this.data.step)
+			this.tree(ctx, this.width / 2 - 150 / 2, this.height, 150, 0, this.data.step)
 		},
 
-		tree(ctx, p0, p1, limit) {
-			const dx = p1.x - p0.x
-			const dy = p1.y - p0.y
-			const dist = Math.sqrt(dx * dx + dy * dy)
+		tree(ctx, x, y, size, angle, limit) {
+			ctx.save()
+			ctx.fillStyle = "#FFF";
+			ctx.translate(x, y)
+			ctx.rotate(angle)
+			ctx.fillRect(0, 0, size, -size)
 
-			const angle = Math.atan2(dy, dx)
-			const angleA = this.randomRange(-this.degToRad(this.data.angleVariety), this.degToRad(this.data.angleVariety))
-			const angleB = this.randomRange(-this.degToRad(this.data.angleVariety), this.degToRad(this.data.angleVariety))
-
-			const branchLength = !this.data.random ? dist * (1 - this.data.trunkRatio) : this.randomRange(1, this.data.lengthRange)
-
-			const pA = {
-				x: p0.x + dx * this.data.trunkRatio,
-				y: p0.y + dy * this.data.trunkRatio
+			// Left Branch
+			const b0 = {
+				x: 0,
+				y: -size,
+				size: Math.abs(Math.cos(this.data.angleA) * size),
+				angle: this.data.angleA
 			}
-
-			const pB = !this.data.random ? {
-				x: pA.x + Math.cos(angle + this.data.angle) * branchLength,
-				y: pA.y + Math.sin(angle + this.data.angle) * branchLength
-			} : {
-				x: pA.x + Math.cos(angle + angleA) * branchLength,
-				y: pA.y + Math.sin(angle + angleA) * branchLength
-			}
-
-			const pC = !this.data.random ? {
-				x: pA.x + Math.cos(angle - this.data.angle) * branchLength,
-				y: pA.y + Math.sin(angle - this.data.angle) * branchLength
-			} : {
-				x: pA.x + Math.cos(angle + angleB) * branchLength,
-				y: pA.y + Math.sin(angle + angleB) * branchLength
-			}
-
-			ctx.beginPath()
-			ctx.strokeStyle = "#FFF";
-			ctx.moveTo(p0.x, p0.y)
-			ctx.lineTo(pA.x, pA.y)
-			ctx.stroke()
 
 			if(limit > 0) {
-				this.tree(ctx, pA, pC, limit - 1)
-				this.tree(ctx, pA, pB, limit - 1)
+				this.tree(ctx, b0.x, b0.y, b0.size, b0.angle, limit - 1)
 			} else {
-				ctx.beginPath();
-				ctx.moveTo(pB.x, pB.y);
-				ctx.lineTo(pA.x, pA.y);
-				ctx.lineTo(pC.x, pC.y);
-				ctx.stroke();
+				ctx.save()
+				ctx.translate(b0.x, b0.y)
+				ctx.rotate(b0.angle)
+				ctx.fillRect(0, 0, b0.size, -b0.size)
+				ctx.restore()
 			}
+
+			// Right Branch
+			const b1 = {
+				x: b0.x + Math.cos(b0.angle) * b0.size,
+				y: b0.y + Math.sin(b0.angle) * b0.size,
+				size: Math.abs(Math.sin(this.data.angleA) * size),
+				angle: b0.angle + Math.PI / 2
+			}
+
+			if(limit > 0) {
+				this.tree(ctx, b1.x, b1.y, b1.size, b1.angle, limit - 1)
+			} else {
+				ctx.save()
+				ctx.translate(b1.x, b1.y)
+				ctx.rotate(b1.angle)
+				ctx.fillRect(0, 0, b1.size, -b1.size)
+				ctx.restore()
+			}
+
+			ctx.restore()
 		}
 	}
 
