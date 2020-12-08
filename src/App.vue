@@ -1,16 +1,26 @@
 <template>
   <div>
-    <the-header />
-    <component :is="'PythagorasTree'" />
+    <the-header @fractalchange="setFractal" />
+    <component :is="currentFractal" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      currentFractal: 'FractalTree'
+    }
+  },
   mounted() {
     if(window.innerWidth < 600) {
       alert('This Site is currently not optimized for Mobile - Please try on Desktop for a better experience')
+    }
+  },
+  methods: {
+    setFractal(e) {
+      this.currentFractal = e
     }
   }
 }

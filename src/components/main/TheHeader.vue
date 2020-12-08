@@ -1,15 +1,44 @@
 <template>
 	<header>
 		<div class="wrapper">
-			<div>Fractal Visualizer</div>
-			<small>v 0.0.1</small>
+			<div>
+				Fractal Visualizer
+				<small>v 0.2.0</small>
+			</div>
+			<div>
+				<dropdown :options="fractals" @selected="$emit('fractalchange', $event)" />
+			</div>
 		</div>
 	</header>
 </template>
 
 <script>
+import Dropdown from '@/components/smart/Dropdown'
+
 export default {
 	name: 'TheHeader',
+	components: {
+		Dropdown
+	},
+	data() {
+		return {
+			fractals: [
+				{
+					component: 'FractalTree',
+					title: 'Fractal Tree'
+				},
+				{
+					component: 'PythagorasTree',
+					title: 'Pythagoras Tree'
+				},
+			]
+		}
+	},
+	methods: {
+		setFractal(e) {
+			console.dir(e)
+		}
+	}
 }
 </script>
 

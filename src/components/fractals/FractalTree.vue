@@ -34,10 +34,10 @@ export default {
 			height: null,
 			width: null,
 			data: {
-				angleDeg: 45,
+				angleDeg: 10,
 				angle: 0,
-				trunkRatio: 0.5,
-				step: 3,
+				trunkRatio: 0.35,
+				step: 5,
 				random: false,
 				angleVariety: 35,
 				lengthRange: 90,

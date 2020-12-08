@@ -28,7 +28,7 @@ export default {
 			data: {
 				angleDeg: 45,
 				angleA: 0,
-				step: 6,
+				step: 7,
 			}
 		}
 	},
