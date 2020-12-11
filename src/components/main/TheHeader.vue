@@ -3,10 +3,10 @@
 		<div class="wrapper">
 			<div>
 				Fractal Visualizer
-				<small>v 0.2.1</small>
+				<small>v 0.3.1</small>
 			</div>
 			<div>
-				<dropdown :options="fractals" @selected="$emit('fractalchange', $event)" />
+				<dropdown :options="fractals" :current="currentFractal" @selected="$emit('fractalchange', $event)" />
 			</div>
 		</div>
 	</header>
@@ -14,30 +14,23 @@
 
 <script>
 import Dropdown from '@/components/smart/Dropdown'
+import FractalList from '@/_config/FractalList'
 
 export default {
 	name: 'TheHeader',
 	components: {
 		Dropdown
 	},
+	props: {
+		currentFractal: String
+	},
 	data() {
 		return {
-			fractals: [
-				{
-					component: 'FractalTree',
-					title: 'Fractal Tree'
-				},
-				{
-					component: 'PythagorasTree',
-					title: 'Pythagoras Tree'
-				},
-			]
+			fractals: []
 		}
 	},
-	methods: {
-		setFractal(e) {
-			console.dir(e)
-		}
+	created() {
+		this.fractals = FractalList
 	}
 }
 </script>

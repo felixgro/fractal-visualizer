@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<select v-model="key" @change="$emit('selected', key)">
+		<select v-model="key" @change="$emit('selected', key)" :required="true">
 			<option v-for="opt in options" :key="opt.component" :value="opt.component">{{ opt.title }}</option>
 		</select>
 	</div>
@@ -13,8 +13,15 @@ export default {
 			key: 'FractalTree'
 		}
 	},
+	mounted() {
+		if(this.current)
+			this.key = this.current
+
+		console.log(this.current)
+	},
 	props: {
 		options: Array,
+		current: String
 	}
 }
 </script>

@@ -1,11 +1,13 @@
 <template>
   <div>
-    <the-header @fractalchange="setFractal" />
+    <the-header @fractalchange="setFractal" :currentFractal="currentFractal" />
     <component :is="currentFractal" />
   </div>
 </template>
 
 <script>
+import Fractals from '@/mixins/Fractals'
+
 export default {
   name: 'App',
   data() {
@@ -13,14 +15,19 @@ export default {
       currentFractal: 'FractalTree'
     }
   },
-  mounted() {
-    if(window.innerWidth < 600) {
+  mixins: [Fractals],
+  created() {
+    if(window.innerWidth < 600)
       alert('This Site is currently not optimized for Mobile - Please try on Desktop for a better experience')
-    }
+
+    if(this.getCurrentFractal())
+      this.setFractal(this.getCurrentFractal())
   },
   methods: {
     setFractal(e) {
       this.currentFractal = e
+
+      this.setCurrentFractal(this.currentFractal)
     }
   }
 }
