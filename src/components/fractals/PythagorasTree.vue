@@ -5,7 +5,7 @@
 			<slider label="Angle (a)" v-model:current="data.angleDeg" :max="90" :min="0" />
 		</template>
 
-		<canvas ref="canvas" />
+		<canvas ref="canvas" id="canvas" />
 	</fractal-layout>
 </template>
 

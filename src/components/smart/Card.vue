@@ -1,5 +1,5 @@
 <template>
-	<div class="card" :id="idd">
+	<div class="card" :id="idd" @mouseover="$emit('mouseover')">
 		<slot />
 	</div>
 </template>
@@ -20,6 +20,8 @@ export default {
 		width: 250px;
 		box-sizing: border-box;
 		padding: 18px 24px;
-		background: hsl(235, 28%, 18%);
+		padding: 10px 15px;
+		background: hsla(235, 28%, 18%, 1);
+		transition: all 120ms ease-out;
 	}
 </style>

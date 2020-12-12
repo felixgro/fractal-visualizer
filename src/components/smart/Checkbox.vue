@@ -24,8 +24,7 @@ label {
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-	margin-top: 16px;
-	margin-bottom: 14px !important;
+	margin-top: 18px !important;
 	color: hsl(235, 18%, 58%);
 	input {
 		display: none;

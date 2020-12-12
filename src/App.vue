@@ -2,13 +2,19 @@
   <div>
     <the-header @fractalchange="setFractal" :currentFractal="currentFractal" />
     <component :is="currentFractal" />
+
+    <the-footer @download="downloadFractal" />
   </div>
 </template>
 
 <script>
 import Fractals from '@/mixins/Fractals'
+import TheFooter from './components/main/TheFooter.vue'
 
 export default {
+  components: {
+    TheFooter
+  },
   name: 'App',
   data() {
     return {
@@ -28,6 +34,13 @@ export default {
       this.currentFractal = e
 
       this.setCurrentFractal(this.currentFractal)
+    },
+    downloadFractal() {
+      const link = document.querySelector('#downloadLink')
+      const canvas = document.querySelector('#canvas')
+
+      link.href = canvas.toDataURL("image/png")
+      link.download = `${this.currentFractal}.png`
     }
   }
 }
@@ -51,7 +64,7 @@ body {
   box-sizing: border-box;
   padding: 0 25px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -62,6 +75,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #F1EDEE;
   font-size: 12pt;
+}
+
+.download-button {
+  z-index: 100;
+  position: fixed;
 }
 
 .fade-enter-active,

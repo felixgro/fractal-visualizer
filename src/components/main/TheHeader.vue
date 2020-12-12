@@ -3,7 +3,7 @@
 		<div class="wrapper">
 			<div>
 				Fractal Visualizer
-				<small>v 0.3.1</small>
+				<small>v 0.4.3</small>
 			</div>
 			<div>
 				<dropdown :options="fractals" :current="currentFractal" @selected="$emit('fractalchange', $event)" />
@@ -42,7 +42,7 @@ export default {
 		left: 0;
 		width: 100%;
 		box-sizing: border-box;
-		padding: 15px 0;
+		padding: 10px 0;
 		border-bottom: 1px solid hsl(235, 28%, 18%);
 		.wrapper {
 			display: flex;

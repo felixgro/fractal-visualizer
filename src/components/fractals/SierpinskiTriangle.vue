@@ -6,7 +6,7 @@
 			<slider label="Width" v-model:current="data.width" :max="width" :min="0" />
 		</template>
 
-		<canvas ref="canvas" />
+		<canvas ref="canvas" id="canvas" />
 	</fractal-layout>
 </template>
 
@@ -27,7 +27,7 @@ export default {
 			width: null,
 			height: null,
 			data: {
-				step: 2,
+				step: 3,
 				height: 421,
 				width: 556
 			}
@@ -57,9 +57,20 @@ export default {
 			this.ctx = canvas.getContext('2d')
 			this.ctx.fillStyle = '#fff'
 
-			const p0 = { x: this.width / 2, y: this.height - this.data.height }
-			const p1 = { x: (this.width / 2) + this.data.width / 2, y: this.height }
-			const p2 = { x: (this.width / 2) - this.data.width / 2, y: this.height }
+			const p0 = {
+				x: this.width / 2,
+				y: this.height - this.data.height
+			}
+
+			const p1 = {
+				x: (this.width / 2) + this.data.width / 2,
+				y: this.height
+			}
+
+			const p2 = {
+				x: (this.width / 2) - this.data.width / 2,
+				y: this.height
+			}
 
 			this.sierpinski(p0, p1, p2, this.data.step)
 		},
@@ -92,6 +103,7 @@ export default {
 			this.ctx.moveTo(p0.x, p0.y)
 			this.ctx.lineTo(p1.x, p1.y)
 			this.ctx.lineTo(p2.x, p2.y)
+			this.ctx.closePath();
 			this.ctx.fill()
 		}
 	}

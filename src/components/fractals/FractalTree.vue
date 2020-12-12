@@ -6,12 +6,12 @@
 			<slider label="Trunk Ratio" v-model:current="data.trunkRatio" :max="1" :min="0" :step="0.001" />
 			<checkbox label="Random" v-model:current="data.random" :checked="data.random" />
 			<div v-if="data.random">
-				<slider label="Angle Range" v-model:current="data.angleVariety" :max="180" :min="1" />
-				<slider label="Length Range" v-model:current="data.lengthRange" :max="250" :min="1" />
+				<slider label="Angle Range" v-model:current="data.angleRange" :max="90" :min="0" />
+				<slider label="Length Range" v-model:current="data.lengthRange" :max="250" :min="0" />
 			</div>
 		</template>
 
-		<canvas ref="canvas" />
+		<canvas ref="canvas" id="canvas" />
 	</fractal-layout>
 </template>
 
@@ -39,8 +39,8 @@ export default {
 				trunkRatio: 0.35,
 				step: 5,
 				random: false,
-				angleVariety: 35,
-				lengthRange: 90,
+				angleRange: 0,
+				lengthRange: 0,
 			}
 		}
 	},
@@ -86,32 +86,29 @@ export default {
 			const dy = p1.y - p0.y
 			const dist = Math.sqrt(dx * dx + dy * dy)
 
-			const angle = Math.atan2(dy, dx)
+			let angle = Math.atan2(dy, dx)
 
-			const angleA = this.randomRange(-this.degToRad(this.data.angleVariety), this.degToRad(this.data.angleVariety))
-			const angleB = this.randomRange(-this.degToRad(this.data.angleVariety), this.degToRad(this.data.angleVariety))
+			if(this.data.random)
+				angle += this.randomRange(-this.degToRad(this.data.angleRange), this.degToRad(this.data.angleRange))
 
-			const branchLength = !this.data.random ? dist * (1 - this.data.trunkRatio) : this.randomRange(1, this.data.lengthRange)
+			let branchLength = dist * (1 - this.data.trunkRatio)
+
+			if(this.data.random)
+				branchLength += this.randomRange(-this.data.lengthRange, this.data.lengthRange)
 
 			const pA = {
 				x: p0.x + dx * this.data.trunkRatio,
 				y: p0.y + dy * this.data.trunkRatio
 			}
 
-			const pB = !this.data.random ? {
+			const pB = {
 				x: pA.x + Math.cos(angle + this.data.angle) * branchLength,
 				y: pA.y + Math.sin(angle + this.data.angle) * branchLength
-			} : {
-				x: pA.x + Math.cos(angle + angleA) * branchLength,
-				y: pA.y + Math.sin(angle + angleA) * branchLength
 			}
 
-			const pC = !this.data.random ? {
+			const pC = {
 				x: pA.x + Math.cos(angle - this.data.angle) * branchLength,
 				y: pA.y + Math.sin(angle - this.data.angle) * branchLength
-			} : {
-				x: pA.x + Math.cos(angle + angleB) * branchLength,
-				y: pA.y + Math.sin(angle + angleB) * branchLength
 			}
 
 			ctx.beginPath()

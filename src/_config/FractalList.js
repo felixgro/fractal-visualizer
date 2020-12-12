@@ -10,5 +10,9 @@ export default [
 	{
 		component: 'SierpinskiTriangle',
 		title: 'Sierpinski Triangle'
+	},
+	{
+		component: 'KochCurve',
+		title: 'Koch Curve'
 	}
 ]
