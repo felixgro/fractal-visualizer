@@ -18,7 +18,7 @@ export default {
   name: 'App',
   data() {
     return {
-      currentFractal: 'FractalTree'
+      currentFractal: 'FractalTree',
     }
   },
   mixins: [Fractals],
@@ -28,6 +28,8 @@ export default {
 
     if(this.getCurrentFractal())
       this.setFractal(this.getCurrentFractal())
+
+    window.onresize = this.windowResize
   },
   methods: {
     setFractal(e) {
@@ -41,6 +43,9 @@ export default {
 
       link.href = canvas.toDataURL("image/png")
       link.download = `${this.currentFractal}.png`
+    },
+    windowResize() {
+      location.reload()
     }
   }
 }
