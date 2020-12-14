@@ -22,6 +22,5 @@ export default {
 		padding: 18px 24px;
 		padding: 10px 15px;
 		background: hsla(235, 28%, 18%, 1);
-		transition: all 120ms ease-out;
 	}
 </style>

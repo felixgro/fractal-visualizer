@@ -1,9 +1,8 @@
 <template>
-	<header>
+	<header class="noselect">
 		<div class="wrapper">
-			<div>
+			<div id="appTitle">
 				Fractal Visualizer
-				<small>v 0.4.3</small>
 			</div>
 			<div>
 				<dropdown :options="fractals" :current="currentFractal" @selected="$emit('fractalchange', $event)" />
