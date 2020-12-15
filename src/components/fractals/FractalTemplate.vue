@@ -1,7 +1,7 @@
 <template>
 	<fractal-layout>
 		<template #settings>
-			<slider label="Step" v-model:current="settings.val" :max="10" :min="0" />
+			<slider label="Step" v-model:current="settings.step" :max="10" :min="0" />
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
@@ -11,25 +11,23 @@
 <script>
 import FractalLayout from '@/components/layouts/FractalLayout'
 import Fractal from '@/mixins/Fractal'
-import Slider from '@/components/smart/Slider'
 
 export default {
 	name: 'FractalName',
 	components: {
-		FractalLayout,
-		Slider
+		FractalLayout
 	},
 	mixins: [Fractal],
 	data() {
 		return {
 			settings: {
-				val: 1
+				step: 2
 			}
 		}
 	},
 	methods: {
 		init() {
-			console.log('init fractal')
+			console.log('init/update fractal')
 		}
 	}
 

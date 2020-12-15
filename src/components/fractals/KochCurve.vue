@@ -1,12 +1,12 @@
 <template>
 	<fractal-layout>
 		<template #settings>
-			<slider label="Step" v-model:current="data.step" :max="5" :min="0" />
-			<slider label="Length Ratio" v-model:current="data.lengthRatio" :step="0.01" :max="0.5" :min="0" />
-			<checkbox label="Koch Snowflake (SF)" v-model:current="data.snowflake" :checked="data.snowflake" />
-			<div v-if="data.snowflake">
-				<slider label="SF Height" v-model:current="data.height" :max="height / 2" :min="0" />
-				<slider label="SF Width" v-model:current="data.width" :max="width" :min="0" />
+			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
+			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max="0.5" :min="0" />
+			<checkbox label="Koch Snowflake (SF)" v-model:current="settings.snowflake" :checked="settings.snowflake" />
+			<div v-if="settings.snowflake">
+				<slider label="SF Height" v-model:current="settings.height" :max="height / 2" :min="0" />
+				<slider label="SF Width" v-model:current="settings.width" :max="width" :min="0" />
 			</div>
 		</template>
 
@@ -16,23 +16,18 @@
 
 <script>
 import FractalLayout from '@/components/layouts/FractalLayout'
+import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
-import Slider from '@/components/smart/Slider'
-import Checkbox from '@/components/smart/Checkbox'
 
 export default {
+	name: 'KochCurve',
 	components: {
-		FractalLayout,
-		Slider,
-		Checkbox
+		FractalLayout
 	},
-	mixins: [Numbers],
+	mixins: [Fractal, Numbers],
 	data() {
 		return {
-			ctx: null,
-			width: null,
-			height: null,
-			data: {
+			settings: {
 				step: 3,
 				lengthRatio: 0.33,
 				snowflake: false,
@@ -41,84 +36,72 @@ export default {
 			}
 		}
 	},
-	watch: {
-		data: {
-			deep: true,
-			handler: function() {
-				this.init()
-			}
-		}
-	},
-	mounted() {
-		this.width = window.innerWidth
-		this.height = window.innerHeight
-
-		this.init()
-	},
 	methods: {
 		init() {
 			const canvas = this.$refs.canvas
 			canvas.width = this.width
 			canvas.height = this.height
 
-			this.ctx = canvas.getContext('2d')
-
-			if(this.data.snowflake) {
+			if(this.settings.snowflake) {
 				const pA = {
 					x: 0,
-					y: -this.data.height
+					y: -this.settings.height
 				}
 				const pB = {
-					x: this.data.width / 2,
-					y: this.data.height / 2
+					x: this.settings.width / 2,
+					y: this.settings.height / 2
 				}
 				const pC = {
-					x: -this.data.width / 2,
-					y: this.data.height / 2
+					x: -this.settings.width / 2,
+					y: this.settings.height / 2
 				}
 
 				this.ctx.translate(this.width / 2, this.height / 2)
 
-				this.koch(pA, pB, this.data.step)
-				this.koch(pB, pC, this.data.step)
-				this.koch(pC, pA, this.data.step)
+				this.koch(pA, pB, this.settings.step)
+				this.koch(pB, pC, this.settings.step)
+				this.koch(pC, pA, this.settings.step)
 
-			} else {
-				const p0 = {
-					x: 100,
-					y: this.height * 0.75
-				}
-
-				const p1 = {
-					x: this.width - 100,
-					y: this.height * 0.75
-				}
-
-				this.koch(p0, p1, this.data.step)
+				return
 			}
+
+			const p0 = {
+				x: 100,
+				y: this.height * 0.75
+			}
+
+			const p1 = {
+				x: this.width - 100,
+				y: this.height * 0.75
+			}
+
+			this.koch(p0, p1, this.settings.step)
 		},
+
+		// Koch Recursion Method
 		koch(p0, p1, limit) {
 			const dx = p1.x - p0.x
 			const dy = p1.y - p0.y
 			const dist = Math.sqrt(dx * dx + dy * dy)
-			const unit = dist * this.data.lengthRatio
+			const unit = dist * this.settings.lengthRatio
 			const angle = Math.atan2(dy, dx)
 
 			const pA = {
-				x: p0.x + dx * this.data.lengthRatio,
-				y: p0.y + dy * this.data.lengthRatio
+				x: p0.x + dx * this.settings.lengthRatio,
+				y: p0.y + dy * this.settings.lengthRatio
 			}
 
 			const pC = {
-				x: p1.x - dx * this.data.lengthRatio,
-				y: p1.y - dy * this.data.lengthRatio
+				x: p1.x - dx * this.settings.lengthRatio,
+				y: p1.y - dy * this.settings.lengthRatio
 			}
 
 			const pB = {
-				x: pA.x + Math.cos(angle - Math.PI * this.data.lengthRatio) * unit,
-				y: pA.y + Math.sin(angle - Math.PI * this.data.lengthRatio) * unit
+				x: pA.x + Math.cos(angle - Math.PI * this.settings.lengthRatio) * unit,
+				y: pA.y + Math.sin(angle - Math.PI * this.settings.lengthRatio) * unit
 			}
 
+			// Recursion Logic
 			if(limit > 0) {
 				this.koch(p0, pA, limit - 1)
 				this.koch(pA, pB, limit - 1)
@@ -138,7 +121,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-
-</style>

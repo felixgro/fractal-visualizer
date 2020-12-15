@@ -1,13 +1,13 @@
 <template>
 	<fractal-layout>
 		<template #settings>
-			<slider label="Step" v-model:current="data.step" :max="10" :min="0" />
-			<slider label="Angle" v-model:current="data.angleDeg" :max="180" :min="1" />
-			<slider label="Trunk Ratio" v-model:current="data.trunkRatio" :max="1" :min="0" :step="0.001" />
-			<checkbox label="Random" v-model:current="data.random" :checked="data.random" />
-			<div v-if="data.random">
-				<slider label="Angle Range" v-model:current="data.angleRange" :max="90" :min="0" />
-				<slider label="Length Range" v-model:current="data.lengthRange" :max="250" :min="0" />
+			<slider label="Step" v-model:current="settings.step" :max="10" :min="0" />
+			<slider label="Angle" v-model:current="settings.angleDeg" :max="180" :min="1" />
+			<slider label="Trunk Ratio" v-model:current="settings.trunkRatio" :max="1" :min="0" :step="0.001" />
+			<checkbox label="Random" v-model:current="settings.random" :checked="settings.random" />
+			<div v-if="settings.random">
+				<slider label="Angle Range" v-model:current="settings.angleRange" :max="90" :min="0" />
+				<slider label="Length Range" v-model:current="settings.lengthRange" :max="250" :min="0" />
 			</div>
 		</template>
 
@@ -17,23 +17,18 @@
 
 <script>
 import FractalLayout from '@/components/layouts/FractalLayout'
+import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
-import Slider from '@/components/smart/Slider'
-import Checkbox from '@/components/smart/Checkbox'
 
 export default {
-	name: 'PythagorasTee',
+	name: 'FractalTree',
 	components: {
-		FractalLayout,
-		Slider,
-		Checkbox
+		FractalLayout
 	},
-	mixins: [Numbers],
+	mixins: [Fractal, Numbers],
 	data() {
 		return {
-			height: null,
-			width: null,
-			data: {
+			settings: {
 				angleDeg: 10,
 				angle: 0,
 				trunkRatio: 0.35,
@@ -44,28 +39,8 @@ export default {
 			}
 		}
 	},
-	mounted() {
-		this.height = window.innerHeight
-		this.width = window.innerWidth
-
-		this.init()
-	},
-	watch: {
-		data: {
-			deep: true,
-			handler: function() {
-				this.init()
-			}
-		}
-	},
 	methods: {
 		init() {
-			const canvas = this.$refs.canvas
-			const ctx = canvas.getContext('2d')
-
-			canvas.height = this.height
-			canvas.width = this.width
-
 			const p0 = {
 				x: this.width / 2,
 				y: this.height
@@ -76,59 +51,67 @@ export default {
 				y: 0
 			}
 
-			this.data.angle = this.degToRad(this.data.angleDeg)
+			this.settings.angle = this.degToRad(this.settings.angleDeg)
 
-			this.tree(ctx, p0, p1, this.data.step)
+			this.tree(p0, p1, this.settings.step)
 		},
 
-		tree(ctx, p0, p1, limit) {
+		// Recursive Tree Method
+		tree(p0, p1, limit) {
 			const dx = p1.x - p0.x
 			const dy = p1.y - p0.y
 			const dist = Math.sqrt(dx * dx + dy * dy)
 
 			let angle = Math.atan2(dy, dx)
+			let branchLength = dist * (1 - this.settings.trunkRatio)
 
-			if(this.data.random)
-				angle += this.randomRange(-this.degToRad(this.data.angleRange), this.degToRad(this.data.angleRange))
+			// Angle Variety
+			if(this.settings.random)
+				angle += this.randomRange(-this.degToRad(this.settings.angleRange), this.degToRad(this.settings.angleRange))
 
-			let branchLength = dist * (1 - this.data.trunkRatio)
-
-			if(this.data.random)
-				branchLength += this.randomRange(-this.data.lengthRange, this.data.lengthRange)
+			// Length Variety
+			if(this.settings.random)
+				branchLength += this.randomRange(-this.settings.lengthRange, this.settings.lengthRange)
 
 			const pA = {
-				x: p0.x + dx * this.data.trunkRatio,
-				y: p0.y + dy * this.data.trunkRatio
+				x: p0.x + dx * this.settings.trunkRatio,
+				y: p0.y + dy * this.settings.trunkRatio
 			}
 
 			const pB = {
-				x: pA.x + Math.cos(angle + this.data.angle) * branchLength,
-				y: pA.y + Math.sin(angle + this.data.angle) * branchLength
+				x: pA.x + Math.cos(angle + this.settings.angle) * branchLength,
+				y: pA.y + Math.sin(angle + this.settings.angle) * branchLength
 			}
 
 			const pC = {
-				x: pA.x + Math.cos(angle - this.data.angle) * branchLength,
-				y: pA.y + Math.sin(angle - this.data.angle) * branchLength
+				x: pA.x + Math.cos(angle - this.settings.angle) * branchLength,
+				y: pA.y + Math.sin(angle - this.settings.angle) * branchLength
 			}
 
-			ctx.beginPath()
-			ctx.strokeStyle = "#FFF";
-			ctx.moveTo(p0.x, p0.y)
-			ctx.lineTo(pA.x, pA.y)
-			ctx.stroke()
+			// Base Branch
+			this.ctx.beginPath()
+			this.ctx.strokeStyle = "#FFF";
+			this.ctx.moveTo(p0.x, p0.y)
+			this.ctx.lineTo(pA.x, pA.y)
+			this.ctx.stroke()
 
+			// Recursion Logic
 			if(limit > 0) {
-				this.tree(ctx, pA, pC, limit - 1)
-				this.tree(ctx, pA, pB, limit - 1)
+				this.tree(pA, pC, limit - 1)
+				this.tree(pA, pB, limit - 1)
 			} else {
-				ctx.beginPath();
-				ctx.moveTo(pB.x, pB.y);
-				ctx.lineTo(pA.x, pA.y);
-				ctx.lineTo(pC.x, pC.y);
-				ctx.stroke();
+				this.drawSplittedBranches(pA, pB, pC)
 			}
+		},
+
+		// Draws two Strokes (pB->pA, pB->pC)
+		drawSplittedBranches(pA, pB, pC) {
+			this.ctx.beginPath();
+			this.ctx.moveTo(pB.x, pB.y);
+			this.ctx.lineTo(pA.x, pA.y);
+			this.ctx.lineTo(pC.x, pC.y);
+			this.ctx.stroke();
 		}
 	}
-
 }
 </script>

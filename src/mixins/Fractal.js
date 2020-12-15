@@ -12,7 +12,8 @@ export default {
 		settings: {
 			deep: true,
 			handler: function() {
-				// Update Fractal
+				// Clear & Update Fractal
+				this.ctx.clearRect(0, 0, this.width, this.height);
 				this.init()
 			}
 		}
