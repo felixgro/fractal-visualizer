@@ -1,7 +1,7 @@
 <template>
 	<footer>
 		<div class="wrapper">
-			<small>V 0.4.5</small>
+			<small>V 0.4.6</small>
 			<a id="downloadLink" class="download-button" ref="dlfrac" href="#" @click="$emit('download')">
 				<span>Download Fractal</span>
 			</a>
