@@ -30,6 +30,5 @@ export default {
 			// Init/Update Fractal here
 		}
 	}
-
 }
 </script>
