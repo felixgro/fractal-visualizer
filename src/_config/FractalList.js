@@ -14,5 +14,9 @@ export default [
 	{
 		component: 'KochCurve',
 		title: 'Koch Curve'
+	},
+	{
+		component: 'FractalTemplate',
+		title: 'Frak Temp'
 	}
 ]

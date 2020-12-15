@@ -5,6 +5,7 @@
 			<a id="downloadLink" class="download-button" ref="dlfrac" href="#" @click="$emit('download')">
 				<span>Download Fractal</span>
 			</a>
+
 		</div>
 	</footer>
 </template>
