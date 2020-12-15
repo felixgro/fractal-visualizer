@@ -13,7 +13,7 @@
 
 <script>
 import Dropdown from '@/components/smart/Dropdown'
-import FractalList from '@/_config/FractalList'
+import { FractalList } from '@/config/FractalList'
 
 export default {
 	name: 'TheHeader',
