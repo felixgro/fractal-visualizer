@@ -1,6 +1,6 @@
 <template>
 	<label class="form-field">
-		<input type="checkbox" @change="$emit('update:current', $event.target.checked)" :checked="checked" />
+		<input type="checkbox" :checked="state" @change="onChange" />
 		<span></span>
 		{{ label }}
 	</label>
@@ -9,11 +9,22 @@
 <script>
 export default {
 	props: {
-		label: String,
-		checked: {
+		label: {
+			type: String,
+			required: true
+		},
+		state: {
 			type: Boolean,
-			default: false
+			required: true
 		}
+	},
+	methods: {
+		onChange(e) {
+			this.$emit('update:state', e.target.checked)
+		}
+	},
+	created() {
+		console.log('[CREATEDCB]' + this.state)
 	}
 }
 </script>
@@ -24,7 +35,6 @@ label {
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-	margin-top: 18px !important;
 	color: hsl(235, 18%, 58%);
 	input {
 		display: none;

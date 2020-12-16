@@ -49,7 +49,7 @@ export default {
 	methods: {
 		// Log Fractal Error to Console
 		fractalError(msg) {
-			console.error(`[FRACTAL] ${msg}`)
+			console.error(`[${this.$options.name}] ${msg}`)
 		}
 	}
 }

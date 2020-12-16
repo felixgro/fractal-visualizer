@@ -8,7 +8,7 @@
 			</div>
 		</div>
 		<transition name="fade">
-			<div v-if="open" class="noselect">
+			<div v-show="open" class="noselect">
 				<slot />
 			</div>
 		</transition>
@@ -121,6 +121,7 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 		cursor: pointer;
+		padding: 18px 24px;
 		span {
 			color: hsl(235, 18%, 58%)
 		}
@@ -159,11 +160,9 @@ export default {
 	}
 	.form-field {
 		margin-bottom: 12px;
-		&:first-of-type {
-			margin-top: 18px;
-		}
+		padding: 0 24px;
 		&:last-of-type {
-			margin-bottom: 0;
+			margin-bottom: 24px;
 		}
 	}
 	div {
@@ -174,6 +173,7 @@ export default {
 			position: fixed;
 			top: 50px;
 			left: 50px;
+			padding: 0;
 		}
 	}
 </style>

@@ -3,11 +3,11 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max="0.5" :min="0" />
-			<checkbox label="Koch Snowflake (SF)" v-model:current="settings.snowflake" :checked="settings.snowflake" />
-			<div v-if="settings.snowflake">
+
+			<toggle-checkbox label="Snowflake (SF)" v-model:state="settings.snowflake">
 				<slider label="SF Height" v-model:current="settings.height" :max="height / 2" :min="0" />
 				<slider label="SF Width" v-model:current="settings.width" :max="width" :min="0" />
-			</div>
+			</toggle-checkbox>
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
@@ -16,13 +16,15 @@
 
 <script>
 import FractalLayout from '@/components/layouts/FractalLayout'
+import ToggleCheckbox from '@/components/smart/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
 
 export default {
 	name: 'KochCurve',
 	components: {
-		FractalLayout
+		FractalLayout,
+		ToggleCheckbox
 	},
 	mixins: [Fractal, Numbers],
 	data() {

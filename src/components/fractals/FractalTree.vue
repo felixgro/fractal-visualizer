@@ -4,11 +4,11 @@
 			<slider label="Step" v-model:current="settings.step" :max="10" :min="0" />
 			<slider label="Angle" v-model:current="settings.angleDeg" :max="180" :min="1" />
 			<slider label="Trunk Ratio" v-model:current="settings.trunkRatio" :max="1" :min="0" :step="0.001" />
-			<checkbox label="Random" v-model:current="settings.random" :checked="settings.random" />
-			<div v-if="settings.random">
+
+			<toggle-checkbox label="Random" v-model:state="settings.random">
 				<slider label="Angle Range" v-model:current="settings.angleRange" :max="90" :min="0" />
 				<slider label="Length Range" v-model:current="settings.lengthRange" :max="250" :min="0" />
-			</div>
+			</toggle-checkbox>
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
@@ -17,13 +17,15 @@
 
 <script>
 import FractalLayout from '@/components/layouts/FractalLayout'
+import ToggleCheckbox from '../smart/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
 
 export default {
 	name: 'FractalTree',
 	components: {
-		FractalLayout
+		FractalLayout,
+		ToggleCheckbox
 	},
 	mixins: [Fractal, Numbers],
 	data() {
