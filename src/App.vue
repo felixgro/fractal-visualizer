@@ -14,7 +14,7 @@ export default {
   name: 'App',
   data() {
     return {
-      currentFractal: 'FractalTree',
+      currentFractal: 'HFractal',
     }
   },
   mixins: [Fractals],
