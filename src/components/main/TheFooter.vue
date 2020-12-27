@@ -32,7 +32,7 @@ export default {
 			a {
 				position: relative;
 				//text-decoration: none;
-				color: hsl(235, 28%, 48%);
+				color: #b84961;
 				display: flex;
 				align-items: center;
 				svg {
