@@ -7,23 +7,25 @@ const app = createApp(App)
 // Main Components
 import TheMenu from '@/components/main/TheMenu'
 import TheHeader from '@/components/main/TheHeader'
+import TheFooter from '@/components/main/TheFooter'
 
 app.component('TheMenu', TheMenu)
 app.component('TheHeader', TheHeader)
+app.component('TheFooter', TheFooter)
 
 
 // Settings Components
-import Slider from '@/components/smart/Slider'
-import Checkbox from '@/components/smart/Checkbox'
+import Slider from '@/components/form/Slider'
 
 app.component('Slider', Slider)
-app.component('Checkbox', Checkbox)
 
 
 // Fractal Components
 import { FractalComponents } from '@/config/FractalList'
+import FractalLayout from '@/components/layouts/FractalLayout'
 
 FractalComponents.forEach(component => app.component(component.name, component))
+app.component('FractalLayout', FractalLayout)
 
 
 app.mount('#app')

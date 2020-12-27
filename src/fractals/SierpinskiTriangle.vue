@@ -11,13 +11,11 @@
 </template>
 
 <script>
-import FractalLayout from '@/components/layouts/FractalLayout'
 import Fractal from '@/mixins/Fractal'
 
 export default {
 	name: 'SierpinskiTriangle',
 	components: {
-		FractalLayout
 	},
 	mixins: [Fractal],
 	data() {

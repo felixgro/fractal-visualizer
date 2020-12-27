@@ -9,14 +9,10 @@
 </template>
 
 <script>
-import FractalLayout from '@/components/layouts/FractalLayout'
 import Fractal from '@/mixins/Fractal'
 
 export default {
 	name: 'FractalName',
-	components: {
-		FractalLayout
-	},
 	mixins: [Fractal],
 	data() {
 		return {

@@ -15,15 +15,13 @@
 </template>
 
 <script>
-import FractalLayout from '@/components/layouts/FractalLayout'
-import ToggleCheckbox from '@/components/smart/ToggleCheckbox'
+import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
 
 export default {
 	name: 'KochCurve',
 	components: {
-		FractalLayout,
 		ToggleCheckbox
 	},
 	mixins: [Fractal, Numbers],

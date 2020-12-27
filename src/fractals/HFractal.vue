@@ -16,25 +16,23 @@
 </template>
 
 <script>
-import FractalLayout from '@/components/layouts/FractalLayout'
-import ToggleCheckbox from '../smart/ToggleCheckbox'
+import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
 
 export default {
-	name: 'FractalTree',
+	name: 'HFractal',
 	components: {
-		FractalLayout,
 		ToggleCheckbox
 	},
 	mixins: [Fractal, Numbers],
 	data() {
 		return {
 			settings: {
-				angleDeg: 10,
+				angleDeg: 90,
 				angle: 0,
-				trunkRatio: 0.35,
-				step: 5,
+				trunkRatio: 0.5,
+				step: 7,
 				random: false,
 				angleRange: 0,
 				lengthRange: 0,

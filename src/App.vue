@@ -9,12 +9,8 @@
 
 <script>
 import Fractals from '@/mixins/Fractals'
-import TheFooter from './components/main/TheFooter.vue'
 
 export default {
-  components: {
-    TheFooter
-  },
   name: 'App',
   data() {
     return {
@@ -69,7 +65,7 @@ body {
   box-sizing: border-box;
   padding: 0 25px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 

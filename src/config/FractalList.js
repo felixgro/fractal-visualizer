@@ -1,11 +1,11 @@
-import FractalTree from '@/components/fractals/FractalTree'
-import PythagorasTree from '@/components/fractals/PythagorasTree'
-import SierpinskiTriangle from '@/components/fractals/SierpinskiTriangle'
-import KochCurve from '@/components/fractals/KochCurve'
+import HFractal from '@/fractals/HFractal'
+import PythagorasTree from '@/fractals/PythagorasTree'
+import SierpinskiTriangle from '@/fractals/SierpinskiTriangle'
+import KochCurve from '@/fractals/KochCurve'
 
 // Components for global Registration
 export const FractalComponents = [
-	FractalTree,
+	HFractal,
 	PythagorasTree,
 	SierpinskiTriangle,
 	KochCurve
@@ -14,8 +14,8 @@ export const FractalComponents = [
 // Component List
 export const FractalList = [
 	{
-		title: 'Fractal Tree',
-		component: 'FractalTree'
+		title: 'H-Fractal',
+		component: 'HFractal'
 	},
 	{
 		title: 'Pythagoras Tree',

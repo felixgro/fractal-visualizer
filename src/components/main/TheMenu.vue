@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Card from '../smart/Card'
+import Card from '@/components/Card'
 import SessionStorage from '@/mixins/SessionStorage'
 
 export default {

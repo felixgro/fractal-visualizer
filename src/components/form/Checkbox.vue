@@ -22,9 +22,6 @@ export default {
 		onChange(e) {
 			this.$emit('update:state', e.target.checked)
 		}
-	},
-	created() {
-		console.log('[CREATEDCB]' + this.state)
 	}
 }
 </script>

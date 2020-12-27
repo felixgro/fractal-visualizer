@@ -10,14 +10,12 @@
 </template>
 
 <script>
-import FractalLayout from '@/components/layouts/FractalLayout'
 import Fractal from '@/mixins/Fractal'
 import Numbers from '@/mixins/Numbers'
 
 export default {
 	name: 'PythagorasTree',
 	components: {
-		FractalLayout
 	},
 	mixins: [Fractal, Numbers],
 	data() {
