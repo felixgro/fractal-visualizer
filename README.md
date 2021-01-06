@@ -24,18 +24,3 @@ A simple extendable fractal visualizer written in vue. This project demonstrates
 | Sierpinski Triangle | Recursively draws 3 Triangles forming a bigger fourth Triangle. |
 
 Check out the [todo list](TODO.md) for upcoming fractals.
-
-## Project Setup
-Clone this repository
-```
-git clone https://github.com/felixgro/fractal-visualizer.git
-cd fractal-visualizer
-```
-Install dependencies
-```
-npm install
-```
-Start server with hot-reloads and auto-compile for development
-```
-npm run serve
-```
