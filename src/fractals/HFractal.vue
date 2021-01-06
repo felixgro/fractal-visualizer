@@ -18,14 +18,14 @@
 <script>
 import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
-import Numbers from '@/mixins/Numbers'
+import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'HFractal',
 	components: {
 		ToggleCheckbox
 	},
-	mixins: [Fractal, Numbers],
+	mixins: [Fractal, Maths],
 	data() {
 		return {
 			settings: {
