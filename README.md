@@ -15,11 +15,12 @@ A simple extendable fractal visualizer written in vue. This project should demon
 
 ## Available Fractals
 
-| Tables           | Description   |
+| Fractal          | Description   |
 |------------------|---------------|
 | H-Fractal        | Recursively splits a line at right angle and reduces the length by a given factor. |
-| Pythagoras Tree     | Visualizes the Pythagoras Theorem by recursively drawing squares along 3 sides of a right triangle. |
-| Koch Curve          | Recursively replaces the center part of a line segment with an equilateral triangle. This procedere generates 3 additional line segments for the next iteration. |
+| Pythagoras Tree  | Visualizes the Pythagoras Theorem by recursively drawing squares along 3 sides of a right triangle. |
+| Koch Curve       | Recursively replaces the center part of a line segment with an equilateral triangle. This procedere generates 3 additional line segments for the next iteration. |
+Check out the [todo list](TODO.md) for upcoming fractals.
 
 ## Project Setup
 Clone this repository
