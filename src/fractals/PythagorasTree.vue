@@ -11,13 +11,13 @@
 
 <script>
 import Fractal from '@/mixins/Fractal'
-import Numbers from '@/mixins/Numbers'
+import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'PythagorasTree',
 	components: {
 	},
-	mixins: [Fractal, Numbers],
+	mixins: [Fractal, Maths],
 	data() {
 		return {
 			settings: {

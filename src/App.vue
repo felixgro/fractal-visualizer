@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Fractals from '@/mixins/Fractals'
+import SessionStorage from '@/mixins/SessionStorage'
 
 export default {
   name: 'App',
@@ -17,7 +17,7 @@ export default {
       currentFractal: 'HFractal',
     }
   },
-  mixins: [Fractals],
+  mixins: [SessionStorage],
   created() {
     if(window.innerWidth < 600)
       alert('This Site is currently not optimized for Mobile - Please try on Desktop for a better experience')
@@ -32,6 +32,12 @@ export default {
       this.currentFractal = e
 
       this.setCurrentFractal(this.currentFractal)
+    },
+    getCurrentFractal() {
+      return this.getSession('fractal')
+    },
+    setCurrentFractal(fractal) {
+      this.setSession('fractal', fractal)
     },
     downloadFractal() {
       const link = document.querySelector('#downloadLink')
