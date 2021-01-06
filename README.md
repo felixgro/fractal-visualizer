@@ -7,6 +7,7 @@
 <p align="center">
 	<img src="https://img.shields.io/github/package-json/v/felixgro/fractal-visualizer?color=%23b84961" alt="Version">
 	<img src="https://img.shields.io/github/license/felixgro/fractal-visualizer?color=b84961" alt="License">
+	<img src="https://img.shields.io/netlify/6918e7b9-3b07-476b-ab53-49a44bfd0040?color=b84961" alt="Netlify Build">
 </p>
 
 A simple extendable fractal visualizer written in vue. This project demonstrates the artistic side of math by generating and redrawing fractals based on user defined variables.
