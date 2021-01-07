@@ -2,7 +2,7 @@
 	<div class="form-field">
 		<div class="form-title">
 			<label :for="uid">{{ label }}</label>
-			<input type="number" v-model="inputVal">
+			<input type="number" pattern="\d*" inputmode="decimal" v-model="inputVal">
 		</div>
 		<input type="range" v-model="inputVal" :id="uid" :min="min" :max="max" :step="step">
 	</div>
@@ -86,7 +86,7 @@ export default {
 
 	input[type="range"] {
 		width: 100%;
-		margin-top: 6px;
+		margin-top: 8px;
 		background: hsl(235, 18%, 38%);
 		-webkit-appearance: none;
 		&:focus {
@@ -98,7 +98,8 @@ export default {
 			width: 8px;
 			height: 12px;
 			background: hsl(235, 28%, 88%);
-			outline: solid 2px hsl(235, 28%, 88%);
+			border: none;
+			outline: solid 3px hsl(235, 28%, 88%);
 			cursor: pointer;
 		}
 		&::-moz-range-thumb {
@@ -106,6 +107,21 @@ export default {
 			height: 25px;
 			background: #4CAF50;
 			cursor: pointer;
+		}
+	}
+
+	@media only screen and (max-width: 500px) {
+		input[type="range"] {
+			margin-top: 9px;
+			&::-webkit-slider-thumb {
+				width: 12px;
+				height: 16px;
+				outline-width: 3px;
+			}
+			&::-moz-range-thumb {
+				width: 25px;
+				height: 25px;
+			}
 		}
 	}
 </style>

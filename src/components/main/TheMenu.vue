@@ -1,6 +1,6 @@
 <template>
 	<card ref="card">
-		<div class="top-bar noselect" @click="toggleMenu" @mousedown.prevent="dragMouseDown">
+		<div class="top-bar noselect" @click="toggleMenu" @mousedown.prevent="dragMouseDown" @touchstart="dragMouseDown">
 			<span>Settings</span>
 			<div class="icon" ref="icon">
 				<div class="line"></div>
@@ -81,35 +81,70 @@ export default {
 		},
 		dragMouseDown(e) {
 			this.dragging = false
-			this.pos.clientX = e.clientX
-			this.pos.clientY = e.clientY
+
+			if (e.type == 'touchstart') {
+				// touch device
+				const touch = e.touches[0] || e.changedTouches[0]
+				this.pos.clientX = touch.clientX
+				this.pos.clientY = touch.clientY
+			} else {
+				// desktop
+				this.pos.clientX = e.clientX
+				this.pos.clientY = e.clientY
+			}
+
 			document.onmousemove = this.dragMenu
+			document.ontouchmove = this.dragMenu
 			document.onmouseup = this.stopDrag
+			document.ontouchend = this.stopDrag
 		},
 		dragMenu(e) {
-			e.preventDefault()
 			this.dragging = true
 
-			this.pos.movementX = this.pos.clientX - e.clientX
-			this.pos.movementY = this.pos.clientY - e.clientY
-			this.pos.clientX = e.clientX
-			this.pos.clientY = e.clientY
+			// touch/cursor position
+			let clientPos = {}
 
+			if(e.type == "touchmove") {
+				// touch device
+				const touch = e.touches[0] || e.changedTouches[0]
+				clientPos.x = touch.clientX
+				clientPos.y = touch.clientY
+			} else {
+				// desktop
+				clientPos.x = e.clientX
+				clientPos.y = e.clientY
+			}
+
+			// calculate drag distance
+			this.pos.movementX = this.pos.clientX - clientPos.x
+			this.pos.movementY = this.pos.clientY - clientPos.y
+			this.pos.clientX = clientPos.x
+			this.pos.clientY = clientPos.y
+
+			// calculate new menu position
 			const y = (this.$refs.card.$el.getBoundingClientRect().y - this.pos.movementY)
 			const x = (this.$refs.card.$el.getBoundingClientRect().x - this.pos.movementX)
 
 			this.$refs.card.$el.style.top = y + 'px'
 			this.$refs.card.$el.style.left = x + 'px'
 
-			this.currentPos = {x: x, y: y}
-
-
+			// save new position
+			this.currentPos = {x, y}
 		},
 		stopDrag(e) {
 			e.preventDefault()
 
+			if (this.pos.movementX == 0 && this.pos.movementY == 0) {
+				this.toggleMenu()
+			} else {
+				this.pos.movementX = 0
+				this.pos.movementY = 0
+			}
+
 			document.onmouseup = null
 			document.onmousemove = null
+			document.ontouchmove = null
+			document.ontouchend = null
 		}
 	}
 }
