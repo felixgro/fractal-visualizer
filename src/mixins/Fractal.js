@@ -50,6 +50,7 @@ export default {
 	},
 	methods: {
 		fractalError(msg) {
+			// eslint-disable-next-line
 			console.error(`[${this.$options.name}] ${msg}`)
 		},
 
