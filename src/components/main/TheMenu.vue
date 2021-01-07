@@ -134,7 +134,7 @@ export default {
 		stopDrag(e) {
 			e.preventDefault()
 
-			if (this.pos.movementX == 0 && this.pos.movementY == 0) {
+			if (this.pos.movementX == 0 && this.pos.movementY == 0 && e.type == 'touchend') {
 				this.toggleMenu()
 			} else {
 				this.pos.movementX = 0
