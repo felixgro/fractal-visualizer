@@ -34,22 +34,31 @@ export default {
 			return this.fractalError('Cannot find settings Object in data')
 
 		// Set Height & With
-		this.width = window.innerWidth
-		this.height = window.innerHeight
-
-		canvas.width = this.width
-		canvas.height = this.height
+		this.setDimensions(canvas)
 
 		// Set Context
 		this.ctx = canvas.getContext('2d')
 
 		// Call init on Component
 		this.init()
+
+		// Redraw when window resizes
+		window.onresize = () => {
+			this.setDimensions(canvas)
+			this.init()
+		}
 	},
 	methods: {
-		// Log Fractal Error to Console
 		fractalError(msg) {
 			console.error(`[${this.$options.name}] ${msg}`)
+		},
+
+		setDimensions(canvas) {
+			this.width = window.innerWidth
+			this.height = window.innerHeight
+
+			canvas.width = this.width
+			canvas.height = this.height
 		}
 	}
 }
