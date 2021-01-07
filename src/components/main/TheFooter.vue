@@ -21,7 +21,7 @@ export default {
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		font-size: .8em;
+		font-size: .9em;
 		width: 100%;
 		box-sizing: border-box;
 		padding: 15px 0;
