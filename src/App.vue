@@ -19,13 +19,13 @@ export default {
   },
   mixins: [SessionStorage],
   created() {
-    if(window.innerWidth < 600)
-      alert('This Site is currently not optimized for Mobile - Please try on Desktop for a better experience')
+    //if(window.innerWidth < 600)
+      //alert('This Site is currently not optimized for Mobile - Please try on Desktop for a better experience')
 
     if(this.getCurrentFractal())
       this.setFractal(this.getCurrentFractal())
 
-    window.onresize = this.windowResize
+    // window.onresize = this.windowResize
   },
   methods: {
     setFractal(e) {
@@ -64,6 +64,9 @@ export default {
 
 body {
   background: #0E0F19;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .wrapper {
