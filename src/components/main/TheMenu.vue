@@ -125,11 +125,7 @@ export default {
 			const y = (this.$refs.card.$el.getBoundingClientRect().y - this.pos.movementY)
 			const x = (this.$refs.card.$el.getBoundingClientRect().x - this.pos.movementX)
 
-			this.$refs.card.$el.style.top = y + 'px'
-			this.$refs.card.$el.style.left = x + 'px'
-
-			// save new position
-			this.currentPos = {x, y}
+			this.updatePosition(x,y)
 		},
 		stopDrag(e) {
 			e.preventDefault()
@@ -145,6 +141,21 @@ export default {
 			document.onmousemove = null
 			document.ontouchmove = null
 			document.ontouchend = null
+		},
+		updatePosition(x,y) {
+			const rightBorder = window.innerWidth - this.$refs.card.$el.getBoundingClientRect().width
+			if(x < 0 || x > rightBorder)
+				x = x > 0 ? rightBorder : 0
+
+			const bottomBorder = window.innerHeight - 96
+			if(y < 61 || y > bottomBorder)
+				y = y > 61 ? bottomBorder : 61
+
+			this.$refs.card.$el.style.top = y + "px"
+			this.$refs.card.$el.style.left = x + "px"
+
+			// save new position
+			this.currentPos = {x, y}
 		}
 	}
 }
