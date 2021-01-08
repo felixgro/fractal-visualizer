@@ -1,7 +1,7 @@
 <template>
 	<footer>
 		<div class="wrapper">
-			<small>Fractal Visualizer [v 0.4.8]</small>
+			<small>v 0.4.8</small>
 			<a id="downloadLink" class="download-button" ref="dlfrac" href="#" @click="$emit('download')">
 				<span>Download Fractal</span>
 			</a>
