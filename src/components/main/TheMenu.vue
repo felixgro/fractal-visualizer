@@ -1,7 +1,17 @@
 <template>
 	<card ref="card">
-		<div class="top-bar noselect" @click="toggleMenu" @mousedown.prevent="dragMouseDown" @touchstart="dragMouseDown">
-			<span>Settings</span>
+		<div class="top-bar noselect" @click="toggleMenu" @mousedown.prevent="dragStart" @touchstart="dragStart">
+			<span class="title">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.95 25.37">
+					<rect class="cls-1" width="6.53" height="6.53"/>
+					<rect class="cls-1" y="9.42" width="6.53" height="6.53"/>
+					<rect class="cls-1" y="18.84" width="6.53" height="6.53"/>
+					<rect class="cls-1" x="9.42" width="6.53" height="6.53"/>
+					<rect class="cls-1" x="9.42" y="9.42" width="6.53" height="6.53"/>
+					<rect class="cls-1" x="9.42" y="18.84" width="6.53" height="6.53"/>
+				</svg>
+				Settings
+			</span>
 			<div class="icon" ref="icon">
 				<div class="line"></div>
 				<div class="line"></div>
@@ -40,18 +50,12 @@ export default {
 	computed: {
 		currentPos: {
 			get: function() {
-				if(this.getSession('nav-pos-x')) {
-					return {
-						x: this.getSession('nav-pos-x'),
-						y: this.getSession('nav-pos-y')
-					}
-				}
-
-				const titleRect = document.getElementById('appTitle').getBoundingClientRect()
+				if(!this.getSession('nav-pos-x') || !this.getSession('nav-pos-y'))
+					return this.defaultPosition()
 
 				return {
-					x: titleRect.x,
-					y: titleRect.y + 50
+					x: this.getSession('nav-pos-x'),
+					y: this.getSession('nav-pos-y')
 				}
 			},
 			set: function(pos) {
@@ -62,9 +66,10 @@ export default {
 	},
 	mounted() {
 		const settingsCard = this.$refs.card.$el
-		const pos = this.currentPos
-		settingsCard.style.left = pos.x + "px"
-		settingsCard.style.top = pos.y + "px"
+		settingsCard.style.left = this.currentPos.x + "px"
+		settingsCard.style.top = this.currentPos.y + "px"
+
+		document.ondblclick = this.reset
 	},
 	methods: {
 		toggleMenu() {
@@ -79,55 +84,37 @@ export default {
 				this.$refs.icon.classList.remove('open')
 			}
 		},
-		dragMouseDown(e) {
+		dragStart(e) {
 			this.dragging = false
 
-			if (e.type == 'touchstart') {
-				// touch device
-				const touch = e.touches[0] || e.changedTouches[0]
-				this.pos.clientX = touch.clientX
-				this.pos.clientY = touch.clientY
-			} else {
-				// desktop
-				this.pos.clientX = e.clientX
-				this.pos.clientY = e.clientY
-			}
+			// store start position
+			const pos = this.getClientPosition(e)
+			this.pos.clientX = pos.x
+			this.pos.clientY = pos.y
 
-			document.onmousemove = this.dragMenu
-			document.ontouchmove = this.dragMenu
-			document.onmouseup = this.stopDrag
-			document.ontouchend = this.stopDrag
+			document.onmousemove = this.dragMove
+			document.ontouchmove = this.dragMove
+			document.onmouseup = this.dragStop
+			document.ontouchend = this.dragStop
 		},
-		dragMenu(e) {
+		dragMove(e) {
 			this.dragging = true
 
-			// touch/cursor position
-			let clientPos = {}
+			// updated client position
+			const pos = this.getClientPosition(e)
 
-			if(e.type == "touchmove") {
-				// touch device
-				const touch = e.touches[0] || e.changedTouches[0]
-				clientPos.x = touch.clientX
-				clientPos.y = touch.clientY
-			} else {
-				// desktop
-				clientPos.x = e.clientX
-				clientPos.y = e.clientY
-			}
+			// drag distance
+			this.pos.movementX = this.pos.clientX - pos.x
+			this.pos.movementY = this.pos.clientY - pos.y
+			this.pos.clientX = pos.x
+			this.pos.clientY = pos.y
 
-			// calculate drag distance
-			this.pos.movementX = this.pos.clientX - clientPos.x
-			this.pos.movementY = this.pos.clientY - clientPos.y
-			this.pos.clientX = clientPos.x
-			this.pos.clientY = clientPos.y
-
-			// calculate new menu position
+			// new menu position
 			const y = (this.$refs.card.$el.getBoundingClientRect().y - this.pos.movementY)
 			const x = (this.$refs.card.$el.getBoundingClientRect().x - this.pos.movementX)
-
-			this.updatePosition(x,y)
+			this.updatePosition({x, y})
 		},
-		stopDrag(e) {
+		dragStop(e) {
 			e.preventDefault()
 
 			if (this.pos.movementX == 0 && this.pos.movementY == 0 && e.type == 'touchend') {
@@ -142,20 +129,44 @@ export default {
 			document.ontouchmove = null
 			document.ontouchend = null
 		},
-		updatePosition(x,y) {
+		updatePosition(pos) {
 			const rightBorder = window.innerWidth - this.$refs.card.$el.getBoundingClientRect().width
-			if(x < 0 || x > rightBorder)
-				x = x > 0 ? rightBorder : 0
+			if(pos.x < 0 || pos.x > rightBorder)
+				pos.x = pos.x > 0 ? rightBorder : 0
 
 			const bottomBorder = window.innerHeight - 96
-			if(y < 61 || y > bottomBorder)
-				y = y > 61 ? bottomBorder : 61
+			if(pos.y < 61 || pos.y > bottomBorder)
+				pos.y = pos.y > 61 ? bottomBorder : 61
 
-			this.$refs.card.$el.style.top = y + "px"
-			this.$refs.card.$el.style.left = x + "px"
+			this.$refs.card.$el.style.top = pos.y + "px"
+			this.$refs.card.$el.style.left = pos.x + "px"
 
 			// save new position
-			this.currentPos = {x, y}
+			this.currentPos = pos
+		},
+		getClientPosition(e) {
+			let pos = {}
+
+			if(e.type == 'touchmove' || e.type == 'touchstart') {
+				// touch device
+				const touch = e.touches[0] || e.changedTouches[0]
+				pos.x = touch.clientX
+				pos.y = touch.clientY
+			} else {
+				// desktop
+				pos.x = e.clientX
+				pos.y = e.clientY
+			}
+
+			return pos
+		},
+		defaultPosition() {
+			const bcr = document.getElementById('appTitle').getBoundingClientRect()
+
+			return {x: bcr.x, y: bcr.y + 50}
+		},
+		reset() {
+			this.updatePosition(this.defaultPosition())
 		}
 	}
 }
@@ -167,24 +178,34 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 		cursor: pointer;
-		padding: 18px 24px;
-		span {
-			color: hsl(235, 18%, 58%)
+		padding: 14px 24px;
+		span.title {
+			display: flex;
+			align-items: center;
+			color: hsl(235, 18%, 58%);
+			font-weight: 700;
+			font-size: 1em;
+			svg {
+				height: 15px;
+				margin-right: 12px;
+				rect {
+					fill: hsl(235, 28%, 28%);
+				}
+			}
 		}
 		.icon {
 			position: relative;
 			height: 12px;
 			width: 12px;
 			margin-top: 2px;
-			opacity: .3;
 			.line {
 				position: absolute;
 				height: 2px;
 				width: 12px;
-				background: #fff;
+				background: hsl(235, 12%, 48%);
 				transition: all 120ms ease-out;
 				&:first-of-type {
-					margin-top: 9px;
+					margin-top: 8px;
 				}
 				&:last-of-type {
 					transform: rotate(90deg) scaleX(0);
@@ -207,6 +228,9 @@ export default {
 	.form-field {
 		margin-bottom: 12px;
 		padding: 0 24px;
+		&:first-of-type {
+			margin-top: 16px;
+		}
 		&:last-of-type {
 			margin-bottom: 24px;
 		}
