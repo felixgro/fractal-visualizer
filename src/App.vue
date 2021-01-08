@@ -64,7 +64,7 @@ export default {
 
 body {
   background: #0E0F19;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   overflow: hidden;
 }

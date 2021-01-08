@@ -2,12 +2,13 @@
 	<fractal-layout>
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="10" :min="0" />
+			<slider label="Scale" v-model:current="settings.scale" :max="2" :min="0" :step="0.01" />
 			<slider label="Angle" v-model:current="settings.angleDeg" :max="180" :min="1" />
-			<slider label="Trunk Ratio" v-model:current="settings.trunkRatio" :max="1" :min="0" :step="0.001" />
+			<slider label="Trunk Ratio" v-model:current="settings.trunkRatio" :max="1" :min="0" :step="0.01" />
 
-			<toggle-checkbox label="Random" v-model:state="settings.random">
-				<slider label="Angle Range" v-model:current="settings.angleRange" :max="90" :min="0" />
-				<slider label="Length Range" v-model:current="settings.lengthRange" :max="250" :min="0" />
+			<toggle-checkbox label="Randomize" v-model:state="settings.random">
+				<slider label="Angle Tolerance" v-model:current="settings.angleRange" :max="90" :min="0" />
+				<slider label="Length Tolerance" v-model:current="settings.lengthRange" :max="250" :min="0" />
 			</toggle-checkbox>
 		</template>
 
@@ -33,6 +34,7 @@ export default {
 				angle: 0,
 				trunkRatio: 0.5,
 				step: 7,
+				scale: 1,
 				random: false,
 				angleRange: 0,
 				lengthRange: 0,
@@ -48,7 +50,7 @@ export default {
 
 			const p1 = {
 				x: this.width / 2,
-				y: 0
+				y: 2 - (1 - window.innerHeight * (1- this.settings.scale))
 			}
 
 			this.settings.angle = this.degToRad(this.settings.angleDeg)

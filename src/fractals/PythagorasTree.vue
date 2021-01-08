@@ -2,6 +2,7 @@
 	<fractal-layout>
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="12" :min="0" />
+			<slider label="Scale" v-model:current="settings.scale" :max="2" :min="0" :step="0.01" />
 			<slider label="Angle (a)" v-model:current="settings.angleDeg" :max="90" :min="0" />
 		</template>
 
@@ -24,14 +25,16 @@ export default {
 				angleDeg: 45,
 				angleA: 0,
 				step: 7,
+				scale: 1,
 			}
 		}
 	},
 	methods: {
 		init() {
 			this.settings.angleA = this.degToRad(-this.settings.angleDeg)
+			const size = 150 * this.settings.scale
 
-			this.tree(this.width / 2 - 150 / 2, this.height, 150, 0, this.settings.step)
+			this.tree(this.width / 2 - size / 2, this.height, size, 0, this.settings.step)
 		},
 
 		// Recursive Tree Method

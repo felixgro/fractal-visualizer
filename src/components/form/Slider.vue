@@ -90,7 +90,7 @@ $gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%
 	input[type="range"] {
 		position: relative;
 		width: 100%;
-		margin-top: 9px;
+		margin-top: 5px;
 		background: none;
 		&::-moz-range-track {
 			background: hsl(235, 18%, 38%);
@@ -129,19 +129,6 @@ $gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%
 			border: none;
 			border-radius: 0;
 			cursor: pointer;
-		}
-	}
-
-	@media only screen and (max-width: 500px) {
-		input[type="range"] {
-			margin-top: 9px;
-			&::-webkit-slider-thumb {
-				outline-width: 3px;
-			}
-			&::-moz-range-thumb {
-				width: 25px;
-				height: 25px;
-			}
 		}
 	}
 </style>
