@@ -27,11 +27,11 @@ Check out the [todo list](TODO.md) for upcoming fractals.
 
 ## Screenshots
 <p>
-	<h5>Mobile Device</h5>
-	<img height="300" src="docs/screenshots/4.jpeg"></img>
-	<img height="300" src="docs/screenshots/5.jpeg"></img>
-	<img height="300" src="docs/screenshots/6.jpeg"></img>
-	<h5>Desktop</h5>
+	Mobile<br>
+	<img height="500" src="docs/screenshots/4.jpeg"></img>
+	<img height="500" src="docs/screenshots/5.jpeg"></img>
+	<img height="500" src="docs/screenshots/6.jpeg"></img>
+	<br><br>Desktop<br>
 	<img src="docs/screenshots/1.png"></img>
 	<img src="docs/screenshots/2.png"></img>
 	<img src="docs/screenshots/3.png"></img>
