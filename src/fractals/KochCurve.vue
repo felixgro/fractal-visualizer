@@ -2,11 +2,12 @@
 	<fractal-layout>
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
+			<slider label="Scale" v-model:current="settings.scale" :step="0.01" :max="2" :min="0" />
 			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max="0.5" :min="0" />
 
-			<toggle-checkbox label="Snowflake (SF)" v-model:state="settings.snowflake">
-				<slider label="SF Height" v-model:current="settings.height" :max="height / 2" :min="0" />
-				<slider label="SF Width" v-model:current="settings.width" :max="width" :min="0" />
+			<toggle-checkbox label="Koch Snowflake" v-model:state="settings.snowflake">
+				<slider label="Height" v-model:current="settings.height" :max="height / 2" :min="0" />
+				<slider label="Width" v-model:current="settings.width" :max="width" :min="0" />
 			</toggle-checkbox>
 		</template>
 
@@ -29,6 +30,7 @@ export default {
 		return {
 			settings: {
 				step: 3,
+				scale: 1,
 				lengthRatio: 0.33,
 				snowflake: false,
 				height: 245,
@@ -45,15 +47,15 @@ export default {
 			if(this.settings.snowflake) {
 				const pA = {
 					x: 0,
-					y: -this.settings.height
+					y: -this.settings.height * this.settings.scale
 				}
 				const pB = {
-					x: this.settings.width / 2,
-					y: this.settings.height / 2
+					x: this.settings.width / 2 * this.settings.scale,
+					y: this.settings.height / 2 * this.settings.scale
 				}
 				const pC = {
-					x: -this.settings.width / 2,
-					y: this.settings.height / 2
+					x: -this.settings.width / 2 * this.settings.scale,
+					y: this.settings.height / 2 * this.settings.scale
 				}
 
 				this.ctx.translate(this.width / 2, this.height / 2)
@@ -65,13 +67,15 @@ export default {
 				return
 			}
 
+			const hspace = (window.innerWidth / 2) - (550 * (this.settings.scale))
+
 			const p0 = {
-				x: 100,
+				x: hspace,
 				y: this.height * 0.75
 			}
 
 			const p1 = {
-				x: this.width - 100,
+				x: this.width - hspace,
 				y: this.height * 0.75
 			}
 
