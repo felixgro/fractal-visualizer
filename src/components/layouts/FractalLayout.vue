@@ -18,7 +18,7 @@ export default {
 	canvas {
 		position: fixed;
 		width: 100vw;
-		height: 100vh;
+		height: 100%;
 		z-index: -1;
 	}
 </style>
