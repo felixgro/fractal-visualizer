@@ -1,11 +1,13 @@
 <template>
 	<div class="toggle-checkbox">
+		<hr>
 		<checkbox :label="label" v-model:state="value" />
 		<transition name="fade">
 			<div v-if="state">
 				<slot />
 			</div>
 		</transition>
+		<hr>
 	</div>
 </template>
 
@@ -48,9 +50,18 @@ export default {
 <style lang="scss">
 	.toggle-checkbox {
 		padding: 0 24px;
+		hr {
+			border: 1px solid hsl(235, 18%, 38%);
+			opacity: .1;
+			&:last-of-type {
+				margin-bottom: 12px;
+			}
+		}
 		.form-field {
 			margin-bottom: 12px;
+			&.checkbox {
+				margin-top: 12px;
+			}
 		}
-		padding-bottom: 5px;
 	}
 </style>
