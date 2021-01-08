@@ -1,11 +1,10 @@
 <template>
 	<footer>
 		<div class="wrapper">
-			<small>v 0.4.8</small>
+			<small>{{ ver }}</small>
 			<a id="downloadLink" class="download-button" ref="dlfrac" href="#" @click="$emit('download')">
 				<span>Download Fractal</span>
 			</a>
-
 		</div>
 	</footer>
 </template>
@@ -13,6 +12,28 @@
 <script>
 export default {
 	name: 'TheFooter',
+	data() {
+		return {
+			ver: 'v0.0.0'
+		}
+	},
+	created() {
+		this.getCurrentVersion()
+	},
+	methods: {
+		getCurrentVersion() {
+			const http = new XMLHttpRequest()
+			http.open('GET', 'https://api.github.com/repos/felixgro/fractal-visualizer/releases')
+			http.send()
+
+			http.onreadystatechange = () => {
+				if(http.readyState == 4 && http.status == 200) {
+					const res = JSON.parse(http.response)[0]
+					this.ver = res.tag_name
+				}
+			}
+		}
+	}
 }
 </script>
 
