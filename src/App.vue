@@ -119,4 +119,12 @@ body {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+::-moz-selection {
+  background: #b84961;
+}
+
+::selection {
+  background: #b84961;
+}
 </style>

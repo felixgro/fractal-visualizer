@@ -53,6 +53,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$color: #b84961;
+$gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%);
+
 	.form-title {
 		display: flex;
 		justify-content: space-between;
@@ -85,27 +88,46 @@ export default {
 	}
 
 	input[type="range"] {
+		position: relative;
 		width: 100%;
-		margin-top: 8px;
-		background: hsl(235, 18%, 38%);
+		margin-top: 9px;
+		background: none;
+		&::-moz-range-track {
+			background: hsl(235, 18%, 38%);
+			height: 16px;
+		}
+		&::after {
+			content: '';
+			position: absolute;
+			z-index: -1;
+			width: 100%;
+			height: 16px;
+			background: hsl(235, 18%, 38%);
+			top: 50%;
+			transform: translateY(-50%);
+		}
 		-webkit-appearance: none;
 		&:focus {
 			outline: none;
+			&::-webkit-slider-thumb {
+				background: $gradient !important;
+			}
 		}
 		&::-webkit-slider-thumb {
 			-webkit-appearance: none;
 			appearance: none;
-			width: 8px;
-			height: 12px;
-			background: hsl(235, 28%, 88%);
+			width: 18px;
+			height: 24px;
+			background: hsl(235, 28%, 88%) !important;
 			border: none;
-			outline: solid 3px hsl(235, 28%, 88%);
 			cursor: pointer;
 		}
 		&::-moz-range-thumb {
-			width: 25px;
-			height: 25px;
-			background: #4CAF50;
+			width: 18px;
+			height: 24px;
+			background: hsl(235, 28%, 88%);
+			border: none;
+			border-radius: 0;
 			cursor: pointer;
 		}
 	}
@@ -114,8 +136,6 @@ export default {
 		input[type="range"] {
 			margin-top: 9px;
 			&::-webkit-slider-thumb {
-				width: 12px;
-				height: 16px;
 				outline-width: 3px;
 			}
 			&::-moz-range-thumb {
