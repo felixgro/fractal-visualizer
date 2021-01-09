@@ -16,9 +16,6 @@
 				</div>
 			</div>
 		</transition>
-		<!-- <select v-model="key" @change="$emit('selected', key)" :required="true">
-			<option v-for="opt in options" :key="opt.component" :value="opt.component">{{ opt.title }}</option>
-		</select> -->
 	</div>
 </template>
 
@@ -82,11 +79,11 @@ export default {
 		width: 230px;
 		box-sizing: border-box;
 		font-family: inherit;
-		background: hsla(235, 28%, 18%, 1);
+		background: $layer-1;
 		cursor: pointer;
 		.current {
 			font-weight: 700;
-			color: hsl(235, 18%, 78%);
+			color: $dd-current;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -95,7 +92,7 @@ export default {
 				transform: rotate(0deg);
 				transition: transform 90ms ease-out;
 				rect {
-					fill: hsl(235, 12%, 48%);
+					fill: $plus-icon;
 				}
 				&.open {
 					transform: rotate(180deg);
@@ -108,18 +105,18 @@ export default {
 			width: inherit;
 			left: 0;
 			z-index: -1;
-			background: hsla(235, 28%, 18%, 1);
-			box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+			background: $layer-1;
+			box-shadow: $shadow-1;
 			.option-wrapper {
 				.option {
 					font-weight: 700;
 					padding: 6px 20px;
-					color: hsl(235, 18%, 68%);
+					color: $label-color;
 					cursor: pointer;
 					transition: all 90ms ease-out;
 					&:hover {
-						color: hsl(235, 18%, 78%);
-						background: hsla(235, 25%, 28%, 1);
+						color: $dd-current;
+						background: $dd-hover-bg;
 					}
 				}
 			}

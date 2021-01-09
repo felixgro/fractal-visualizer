@@ -1,0 +1,70 @@
+@import '_variables';
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: $bg;
+	height: 100%;
+	width: 100vw;
+	overflow: hidden;
+}
+
+.wrapper {
+	position: relative;
+	box-sizing: border-box;
+	padding: 0 25px;
+	width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+// Fade Transition
+.fade-enter-active,
+.fade-leave-active {
+  transform-origin: top center;
+  transition: all 120ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: ScaleY(.5);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  transform: ScaleY(1);
+  opacity: 1
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.download-button {
+	z-index: 100;
+	position: fixed;
+}
+
+::-moz-selection {
+	background: $main;
+}
+
+::selection {
+	background: $main;
+}
+
+.accessable {
+	position: absolute;
+	opacity: 0;
+	display: none;
+}

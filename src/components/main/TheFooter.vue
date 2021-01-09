@@ -52,16 +52,9 @@ export default {
 			align-items: center;
 			a {
 				position: relative;
-				//text-decoration: none;
-				color: #b84961;
+				color: $main;
 				display: flex;
 				align-items: center;
-				svg {
-					height: 15px;
-					path {
-						fill:  hsl(235, 28%, 38%)
-					}
-				}
 			}
 		}
 	}
