@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="accessable">Fractal Visualizer</h1>
     <the-header @fractalchange="setFractal" :currentFractal="currentFractal" />
     <component :is="currentFractal" />
 
