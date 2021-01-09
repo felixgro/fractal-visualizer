@@ -53,15 +53,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$color: #b84961;
-$gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%);
-
 	.form-title {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		label {
-			color: hsl(235, 18%, 58%);
+			color: $label-color;
 			display: block;
 			flex: 1;
 		}
@@ -93,7 +90,7 @@ $gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%
 		margin-top: 5px;
 		background: none;
 		&::-moz-range-track {
-			background: hsl(235, 18%, 38%);
+			background: $slider-track;
 			height: 16px;
 		}
 		&::after {
@@ -102,7 +99,7 @@ $gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%
 			z-index: -1;
 			width: 100%;
 			height: 16px;
-			background: hsl(235, 18%, 38%);
+			background: $slider-track;
 			top: 50%;
 			transform: translateY(-50%);
 		}
@@ -118,14 +115,14 @@ $gradient: linear-gradient(135deg, rgba(202,69,89,1) 0%, rgba(192,46,112,1) 100%
 			appearance: none;
 			width: 18px;
 			height: 24px;
-			background: hsl(235, 28%, 88%) !important;
+			background: $slider-thumb !important;
 			border: none;
 			cursor: pointer;
 		}
 		&::-moz-range-thumb {
 			width: 18px;
 			height: 24px;
-			background: hsl(235, 28%, 88%);
+			background: $slider-thumb;
 			border: none;
 			border-radius: 0;
 			cursor: pointer;

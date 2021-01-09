@@ -21,6 +21,7 @@ export default {
 		box-sizing: border-box;
 		padding: 18px 24px;
 		padding: 10px 15px;
-		background: hsla(235, 28%, 18%, 1);
+		background: $layer-1;
+		box-shadow: $shadow-1;
 	}
 </style>
