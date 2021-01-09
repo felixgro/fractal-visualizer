@@ -55,7 +55,6 @@ export default {
 		box-sizing: border-box;
 		padding: 10px 0;
 		z-index: 15000;
-		// border-bottom: 1px solid hsl(235, 28%, 18%);
 		.wrapper {
 			display: flex;
 			justify-content: space-between;

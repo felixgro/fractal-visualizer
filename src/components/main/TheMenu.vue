@@ -182,14 +182,14 @@ export default {
 		span.title {
 			display: flex;
 			align-items: center;
-			color: hsl(235, 18%, 58%);
+			color: $label-color;
 			font-weight: 700;
 			font-size: 1em;
 			svg {
 				height: 15px;
 				margin-right: 12px;
 				rect {
-					fill: hsl(235, 28%, 28%);
+					fill: $drag-icon;
 				}
 			}
 		}
@@ -202,7 +202,7 @@ export default {
 				position: absolute;
 				height: 2px;
 				width: 12px;
-				background: hsl(235, 12%, 48%);
+				background: $plus-icon;
 				transition: all 120ms ease-out;
 				&:first-of-type {
 					margin-top: 8px;
