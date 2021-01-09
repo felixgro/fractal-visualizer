@@ -59,6 +59,12 @@ body {
 	background: $main;
 }
 
-  ::selection {
+::selection {
 	background: $main;
+}
+
+.accessable {
+	position: absolute;
+	opacity: 0;
+	display: none;
 }

@@ -2,7 +2,8 @@
 	<div class="form-field">
 		<div class="form-title">
 			<label :for="uid">{{ label }}</label>
-			<input type="number" pattern="\d*" inputmode="decimal" v-model="inputVal">
+			<label :for="uid2" class="accessable">{{ label }}</label>
+			<input type="number" pattern="\d*" inputmode="decimal" v-model="inputVal" :id="uid2">
 		</div>
 		<input type="range" v-model="inputVal" :id="uid" :min="min" :max="max" :step="step">
 	</div>
@@ -33,11 +34,13 @@ export default {
 	},
 	data() {
 		return {
-			uid: null
+			uid: null,
+			uid2: null
 		}
 	},
 	mounted() {
-		this.uid = this._uid
+		this.uid = this.$.uid;
+		this.uid2 = this.uid + '-i'
 	},
 	computed: {
 		inputVal: {
