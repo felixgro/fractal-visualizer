@@ -2,7 +2,7 @@
 	<footer>
 		<div class="wrapper">
 			<small>{{ ver }}</small>
-			<a id="downloadLink" class="download-button" ref="dlfrac" href="#" @click="$emit('download')">
+			<a id="downloadLink" class="download-button" ref="dlfrac" href="#" @click.passive="$emit('download')">
 				<span>Download Fractal</span>
 			</a>
 		</div>
