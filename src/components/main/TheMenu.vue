@@ -1,6 +1,6 @@
 <template>
 	<card ref="card">
-		<div class="top-bar noselect" @click="toggleMenu" @mousedown.prevent="dragStart" @touchstart="dragStart">
+		<div class="top-bar noselect" @click.prevent="toggleMenu" @mousedown.passive="dragStart" @touchstart.passive="dragStart">
 			<span class="title">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.95 25.37">
 					<rect class="cls-1" width="6.53" height="6.53"/>
@@ -98,6 +98,8 @@ export default {
 			document.ontouchend = this.dragStop
 		},
 		dragMove(e) {
+			e.preventDefault()
+
 			this.dragging = true
 
 			// updated client position
@@ -165,7 +167,9 @@ export default {
 
 			return {x: bcr.x, y: bcr.y + 50}
 		},
-		reset() {
+		reset(e) {
+			e.preventDefault()
+
 			this.updatePosition(this.defaultPosition())
 		}
 	}
