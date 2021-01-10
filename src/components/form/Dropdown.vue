@@ -1,5 +1,5 @@
 <template>
-	<div class="dropdown" @click="toggle">
+	<div class="dropdown" @click.prevent="toggle">
 		<div class="current">
 			{{ value }}
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.82 17" ref="icon">
@@ -9,7 +9,7 @@
 		</div>
 		<transition name="fade">
 			<div class="options" v-if="open">
-				<div class="option-wrapper" v-for="opt in options" :key="opt.component" :data-val="opt.component" @click="optionSelected">
+				<div class="option-wrapper" v-for="opt in options" :key="opt.component" :data-val="opt.component" @click.passive="optionSelected">
 					<div class="option" v-if="opt.component != key">
 						{{ opt.title }}
 					</div>

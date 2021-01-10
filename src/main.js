@@ -23,6 +23,7 @@ app.component('Slider', Slider)
 // Fractal Components
 import { FractalComponents } from '@/config/FractalList'
 import FractalLayout from '@/components/layouts/FractalLayout'
+import './registerServiceWorker'
 
 FractalComponents.forEach(component => app.component(component.name, component))
 app.component('FractalLayout', FractalLayout)
