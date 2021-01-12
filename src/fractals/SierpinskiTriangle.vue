@@ -2,8 +2,7 @@
 	<fractal-layout>
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
-			<slider label="Height" v-model:current="settings.height" :max="height" :min="0" />
-			<slider label="Width" v-model:current="settings.width" :max="width" :min="0" />
+			<slider label="Scale" v-model:current="settings.scale" :max="2" :min="0" :step="0.01" />
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
@@ -22,25 +21,26 @@ export default {
 		return {
 			settings: {
 				step: 3,
-				height: 421,
-				width: 556
+				scale: 1
 			}
 		}
 	},
 	methods: {
 		init() {
+			const height = 421 * this.settings.scale
+			const width = 556 * this.settings.scale
 			const p0 = {
 				x: this.width / 2,
-				y: this.height - this.settings.height
+				y: this.height - height
 			}
 
 			const p1 = {
-				x: (this.width / 2) + this.settings.width / 2,
+				x: (this.width / 2) + width / 2,
 				y: this.height
 			}
 
 			const p2 = {
-				x: (this.width / 2) - this.settings.width / 2,
+				x: (this.width / 2) - width / 2,
 				y: this.height
 			}
 
