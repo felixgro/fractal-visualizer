@@ -37,9 +37,9 @@ export const FractalList = [
 	{
 		title: 'Fibonacci Word',
 		component: 'FibonacciWordFractal'
-  },
-  {
+	},
+	{
 		title: 'Vicsek Fractal',
 		component: 'VicsekFractal'
 	}
-]
+].sort((a, b) => a.title < b.title ? -1 : 1)
