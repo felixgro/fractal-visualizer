@@ -3,6 +3,7 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Scale" v-model:current="settings.scale" :max="2" :min="0" :step="0.01" />
+			<slider label="Width Ratio" v-model:current="settings.widthRatio" :max="2" :min="0" :step="0.01" />
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
@@ -21,27 +22,29 @@ export default {
 		return {
 			settings: {
 				step: 3,
-				scale: 1
+				scale: 1,
+				widthRatio: 1.3
 			}
 		}
 	},
 	methods: {
 		init() {
 			const height = 421 * this.settings.scale
-			const width = 556 * this.settings.scale
+			const width = height * this.settings.widthRatio
+
 			const p0 = {
 				x: this.width / 2,
-				y: this.height - height
+				y: this.height / 2 - height / 2
 			}
 
 			const p1 = {
 				x: (this.width / 2) + width / 2,
-				y: this.height
+				y: this.height / 2 + height / 2
 			}
 
 			const p2 = {
 				x: (this.width / 2) - width / 2,
-				y: this.height
+				y: this.height / 2 + height / 2
 			}
 
 			// Start Recursion
