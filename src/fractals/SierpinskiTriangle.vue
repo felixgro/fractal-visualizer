@@ -3,7 +3,8 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Scale" v-model:current="settings.scale" :max="2" :min="0" :step="0.01" />
-			<slider label="Width Ratio" v-model:current="settings.widthRatio" :max="2" :min="0" :step="0.01" />
+			<slider label="Angle" v-model:current="settings.angle" :max="90" :min="0" :step="0.01" />
+			<checkbox label="Mirror" v-model:state="settings.mirror"/>
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
@@ -12,10 +13,12 @@
 
 <script>
 import Fractal from '@/mixins/Fractal'
+import Checkbox from '@/components/form/Checkbox'
 
 export default {
 	name: 'SierpinskiTriangle',
 	components: {
+		Checkbox
 	},
 	mixins: [Fractal],
 	data() {
@@ -23,28 +26,50 @@ export default {
 			settings: {
 				step: 3,
 				scale: 1,
-				widthRatio: 1.3
-			}
+				angle: 33.33,
+				mirror: false
+			},
+			radAngle: 0
 		}
 	},
 	methods: {
 		init() {
 			const height = 421 * this.settings.scale
-			const width = height * this.settings.widthRatio
 
-			const p0 = {
-				x: this.width / 2,
-				y: this.height / 2 - height / 2
-			}
+			this.radAngle = (this.settings.angle * Math.PI / 180)
+			const dy = Math.cos(this.radAngle) * height
+			let p0, p1, p2
 
-			const p1 = {
-				x: (this.width / 2) + width / 2,
-				y: this.height / 2 + height / 2
-			}
+			if (!this.settings.mirror) {
+				p0 = {
+					x: this.width / 2,
+					y: this.height / 2 - dy / 2
+				}
 
-			const p2 = {
-				x: (this.width / 2) - width / 2,
-				y: this.height / 2 + height / 2
+				p1 = {
+					x: p0.x + Math.cos(this.radAngle + Math.PI/2) * height,
+					y: p0.y + Math.sin(this.radAngle + Math.PI/2) * height
+				}
+
+				p2 = {
+					x: p0.x + Math.cos(-this.radAngle + Math.PI/2) * height,
+					y: p0.y + Math.sin(-this.radAngle + Math.PI/2) * height,
+				}
+			} else {
+				p0 = {
+					x: this.width / 2,
+					y: this.height / 2 + dy / 2
+				}
+
+				p1 = {
+					x: p0.x - Math.cos(this.radAngle + Math.PI/2) * height,
+					y: p0.y - Math.sin(this.radAngle + Math.PI/2) * height
+				}
+
+				p2 = {
+					x: p0.x - Math.cos(-this.radAngle + Math.PI/2) * height,
+					y: p0.y - Math.sin(-this.radAngle + Math.PI/2) * height,
+				}
 			}
 
 			// Start Recursion
