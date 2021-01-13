@@ -3,7 +3,8 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Scale" v-model:current="settings.scale" :step="0.01" :max="2" :min="0" />
-			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max="0.5" :min="0" />
+			<slider label="Angle" v-model:current="settings.angle" :step="1" :max="90" :min="0" />
+			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max=".5" :min="0" />
 
 			<toggle-checkbox label="Koch Snowflake" v-model:state="settings.snowflake">
 				<slider label="Height" v-model:current="settings.height" :max="height / 2" :min="0" />
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Maths from '@/mixins/Maths'
@@ -29,12 +31,14 @@ export default {
 	data() {
 		return {
 			settings: {
-				step: 3,
-				scale: 1,
+				step: 0,
+				scale: .8,
 				lengthRatio: 0.33,
+				angle: 45,
+				showHeight: true,
 				snowflake: false,
 				height: 245,
-				width: 480
+				width: 480,
 			}
 		}
 	},
@@ -84,15 +88,35 @@ export default {
 
 		// Koch Recursion Method
 		koch(p0, p1, limit) {
-			const dx = p1.x - p0.x
-			const dy = p1.y - p0.y
+			const dx = (p1.x - p0.x)
+			const dy = (p1.y - p0.y)
 			const dist = Math.sqrt(dx * dx + dy * dy)
 			const unit = dist * this.settings.lengthRatio
 			const angle = Math.atan2(dy, dx)
+			const aLength   = (dist - 2 * unit) / 2
+
+			const height = Math.tan(this.settings.angle * Math.PI / 180) * aLength
+
+			const angleB = -Math.atan2(height, aLength)
+			const hypLength = Math.sqrt(height * height + aLength * aLength)
+
 
 			const pA = {
 				x: p0.x + dx * this.settings.lengthRatio,
 				y: p0.y + dy * this.settings.lengthRatio
+			}
+
+			if(this.settings.showHeight) {
+				this.ctx.rect(this.width / 2, this.height * 0.75 - height, 1, height)
+				this.ctx.fillStyle = '#ccc'
+				this.ctx.fill()
+				this.ctx.font = "10px Arial";
+				this.ctx.fillText('height', this.width / 2 + 10, this.height * 0.75 - height)
+			}
+
+			const pB = {
+				x: pA.x + Math.cos(angle + angleB) * hypLength,
+				y: pA.y + Math.sin(angle + angleB) * hypLength
 			}
 
 			const pC = {
@@ -100,10 +124,11 @@ export default {
 				y: p1.y - dy * this.settings.lengthRatio
 			}
 
-			const pB = {
-				x: pA.x + Math.cos(angle - Math.PI * this.settings.lengthRatio) * unit,
-				y: pA.y + Math.sin(angle - Math.PI * this.settings.lengthRatio) * unit
-			}
+			this.label(p0, 'p0')
+			this.label(pA, 'pA', true)
+			this.label(pB, 'pB')
+			this.label(pC, 'pC')
+			this.label(p1, 'p1')
 
 			// Recursion Logic
 			if(limit > 0) {
@@ -121,6 +146,11 @@ export default {
 				this.ctx.lineTo(p1.x, p1.y)
 				this.ctx.stroke()
 			}
+		},
+		label(p, title, inverse = false) {
+			this.ctx.font = "10px Arial";
+			this.ctx.fillStyle = "#fff"
+			this.ctx.fillText(title, (!inverse ? p.x + 10 : p.x - 10), p.y - 10)
 		}
 	}
 }
