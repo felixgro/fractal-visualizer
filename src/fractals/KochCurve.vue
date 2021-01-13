@@ -3,12 +3,13 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Scale" v-model:current="settings.scale" :step="0.01" :max="2" :min="0" />
-			<slider label="Angle" v-model:current="settings.angle" :step="1" :max="90" :min="0" />
+			<slider label="Angle" v-model:current="settings.angle" :step="1" :max="180" :min="1" />
 			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max=".5" :min="0" />
 
-			<toggle-checkbox label="Koch Snowflake" v-model:state="settings.snowflake">
-				<slider label="Height" v-model:current="settings.height" :max="height / 2" :min="0" />
-				<slider label="Width" v-model:current="settings.width" :max="width" :min="0" />
+			<toggle-checkbox label="Koch Snowflake (SF)" v-model:state="settings.snowflake">
+				<slider label="SF Height" v-model:current="settings.height" :max="500" :min="0" />
+				<slider label="SF Angle" v-model:current="settings.angleSF" :max="180" :min="0" />
+				<checkbox label="Mirror" v-model:state="settings.mirror"/>
 			</toggle-checkbox>
 		</template>
 
@@ -19,13 +20,15 @@
 <script>
 /* eslint-disable */
 import ToggleCheckbox from '@/components/form/ToggleCheckbox'
+import Checkbox from '@/components/form/Checkbox'
 import Fractal from '@/mixins/Fractal'
 import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'KochCurve',
 	components: {
-		ToggleCheckbox
+		ToggleCheckbox,
+		Checkbox
 	},
 	mixins: [Fractal, Maths],
 	data() {
@@ -35,10 +38,11 @@ export default {
 				scale: .8,
 				lengthRatio: 0.33,
 				angle: 45,
-				showHeight: true,
-				snowflake: false,
-				height: 245,
-				width: 480,
+				showPoints: false,
+				snowflake: true,
+				height: 280,
+				angleSF: 45,
+				mirror: false
 			}
 		}
 	},
@@ -48,19 +52,28 @@ export default {
 			canvas.width = this.width
 			canvas.height = this.height
 
+
 			if(this.settings.snowflake) {
 				const pA = {
 					x: 0,
-					y: -this.settings.height * this.settings.scale
+					y: -this.settings.height / 2 * this.settings.scale
 				}
 				const pB = {
-					x: this.settings.width / 2 * this.settings.scale,
-					y: this.settings.height / 2 * this.settings.scale
+					x: (pA.x - Math.cos(this.degToRad(this.settings.angleSF / 2) + Math.PI / 2)) * this.settings.height * this.settings.scale,
+					y: pA.y + this.settings.height * this.settings.scale
 				}
 				const pC = {
-					x: -this.settings.width / 2 * this.settings.scale,
-					y: this.settings.height / 2 * this.settings.scale
+					x: (pA.x + Math.cos(this.degToRad(this.settings.angleSF / 2) + Math.PI / 2)) * this.settings.height * this.settings.scale,
+					y: pA.y + this.settings.height * this.settings.scale
 				}
+				// const pB = {
+				// 	x: this.settings.angleSF / 2 * this.settings.scale,
+				// 	y: this.settings.height / 2 * this.settings.scale
+				// }
+				// const pC = {
+				// 	x: -this.settings.angleSF / 2 * this.settings.scale,
+				// 	y: this.settings.height / 2 * this.settings.scale
+				// }
 
 				this.ctx.translate(this.width / 2, this.height / 2)
 
@@ -75,12 +88,12 @@ export default {
 
 			const p0 = {
 				x: hspace,
-				y: this.height * 0.75
+				y: this.height * 0.67
 			}
 
 			const p1 = {
 				x: this.width - hspace,
-				y: this.height * 0.75
+				y: this.height * 0.67
 			}
 
 			this.koch(p0, p1, this.settings.step)
@@ -95,23 +108,14 @@ export default {
 			const angle = Math.atan2(dy, dx)
 			const aLength   = (dist - 2 * unit) / 2
 
-			const height = Math.tan(this.settings.angle * Math.PI / 180) * aLength
+			const height = -Math.tan(this.degToRad((this.settings.angle / 2) - 90)) * aLength
 
 			const angleB = -Math.atan2(height, aLength)
 			const hypLength = Math.sqrt(height * height + aLength * aLength)
 
-
 			const pA = {
 				x: p0.x + dx * this.settings.lengthRatio,
 				y: p0.y + dy * this.settings.lengthRatio
-			}
-
-			if(this.settings.showHeight) {
-				this.ctx.rect(this.width / 2, this.height * 0.75 - height, 1, height)
-				this.ctx.fillStyle = '#ccc'
-				this.ctx.fill()
-				this.ctx.font = "10px Arial";
-				this.ctx.fillText('height', this.width / 2 + 10, this.height * 0.75 - height)
 			}
 
 			const pB = {
@@ -124,11 +128,13 @@ export default {
 				y: p1.y - dy * this.settings.lengthRatio
 			}
 
-			this.label(p0, 'p0')
-			this.label(pA, 'pA', true)
-			this.label(pB, 'pB')
-			this.label(pC, 'pC')
-			this.label(p1, 'p1')
+			if(this.settings.showPoints) {
+				this.label(p0, 'p0')
+				this.label(pA, 'pA', true)
+				this.label(pB, 'pB')
+				this.label(pC, 'pC')
+				this.label(p1, 'p1')
+			}
 
 			// Recursion Logic
 			if(limit > 0) {
