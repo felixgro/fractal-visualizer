@@ -2,7 +2,6 @@ import HFractal from '@/fractals/HFractal'
 import PythagorasTree from '@/fractals/PythagorasTree'
 import SierpinskiTriangle from '@/fractals/SierpinskiTriangle'
 import KochCurve from '@/fractals/KochCurve'
-import FibonacciWordFractal from '@/fractals/FibonacciWordFractal'
 import VicsekFractal from '@/fractals/VicsekFractal'
 
 
@@ -12,7 +11,6 @@ export const FractalComponents = [
 	PythagorasTree,
 	SierpinskiTriangle,
 	KochCurve,
-	FibonacciWordFractal,
 	VicsekFractal
 ]
 
@@ -35,11 +33,7 @@ export const FractalList = [
 		component: 'KochCurve'
 	},
 	{
-		title: 'Fibonacci Word',
-		component: 'FibonacciWordFractal'
-  },
-  {
 		title: 'Vicsek Fractal',
 		component: 'VicsekFractal'
 	}
-]
+].sort((a, b) => a.title < b.title ? -1 : 1)
