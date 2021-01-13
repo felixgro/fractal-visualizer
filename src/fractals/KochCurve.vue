@@ -6,10 +6,8 @@
 			<slider label="Angle" v-model:current="settings.angle" :step="1" :max="180" :min="1" />
 			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max=".5" :min="0" />
 
-			<toggle-checkbox label="Koch Snowflake (SF)" v-model:state="settings.snowflake">
-				<slider label="SF Height" v-model:current="settings.height" :max="500" :min="0" />
-				<slider label="SF Angle" v-model:current="settings.angleSF" :max="180" :min="0" />
-				<checkbox label="Mirror" v-model:state="settings.mirror"/>
+			<toggle-checkbox label="Koch Snowflake" v-model:state="settings.snowflake">
+				<slider label="Angle" v-model:current="settings.angleSF" :max="180" :min="0" />
 			</toggle-checkbox>
 		</template>
 
@@ -34,15 +32,13 @@ export default {
 	data() {
 		return {
 			settings: {
-				step: 0,
-				scale: .8,
+				step: 4,
+				scale: 1,
 				lengthRatio: 0.33,
-				angle: 45,
-				showPoints: false,
-				snowflake: true,
-				height: 280,
-				angleSF: 45,
-				mirror: false
+				angle: 60,
+				snowflake: false,
+				angleSF: 68,
+				height: 500
 			}
 		}
 	},
@@ -52,28 +48,25 @@ export default {
 			canvas.width = this.width
 			canvas.height = this.height
 
-
 			if(this.settings.snowflake) {
+				const height = 360 * this.settings.scale
+				const angle = (this.settings.angleSF * Math.PI / 180)
+				const dy = Math.cos(angle / 2) * height
+
 				const pA = {
 					x: 0,
-					y: -this.settings.height / 2 * this.settings.scale
+					y: -dy / 2
 				}
+
 				const pB = {
-					x: (pA.x - Math.cos(this.degToRad(this.settings.angleSF / 2) + Math.PI / 2)) * this.settings.height * this.settings.scale,
-					y: pA.y + this.settings.height * this.settings.scale
+					x: pA.x + Math.cos(-angle/2 + Math.PI/2) * height,
+					y: pA.y + Math.sin(angle/2 + Math.PI/2) * height
 				}
+
 				const pC = {
-					x: (pA.x + Math.cos(this.degToRad(this.settings.angleSF / 2) + Math.PI / 2)) * this.settings.height * this.settings.scale,
-					y: pA.y + this.settings.height * this.settings.scale
+					x: pA.x + Math.cos(angle/2 + Math.PI/2) * height,
+					y: pA.y + Math.sin(angle/2 + Math.PI/2) * height
 				}
-				// const pB = {
-				// 	x: this.settings.angleSF / 2 * this.settings.scale,
-				// 	y: this.settings.height / 2 * this.settings.scale
-				// }
-				// const pC = {
-				// 	x: -this.settings.angleSF / 2 * this.settings.scale,
-				// 	y: this.settings.height / 2 * this.settings.scale
-				// }
 
 				this.ctx.translate(this.width / 2, this.height / 2)
 
@@ -84,7 +77,7 @@ export default {
 				return
 			}
 
-			const hspace = (window.innerWidth / 2) - (550 * (this.settings.scale))
+			const hspace = (window.innerWidth / 2) - (380 * (this.settings.scale))
 
 			const p0 = {
 				x: hspace,
