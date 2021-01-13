@@ -3,11 +3,11 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Scale" v-model:current="settings.scale" :step="0.01" :max="2" :min="0" />
-			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max="0.5" :min="0" />
+			<slider label="Angle" v-model:current="settings.angle" :step="1" :max="180" :min="1" />
+			<slider label="Length Ratio" v-model:current="settings.lengthRatio" :step="0.01" :max=".5" :min="0" />
 
 			<toggle-checkbox label="Koch Snowflake" v-model:state="settings.snowflake">
-				<slider label="Height" v-model:current="settings.height" :max="height / 2" :min="0" />
-				<slider label="Width" v-model:current="settings.width" :max="width" :min="0" />
+				<slider label="Angle" v-model:current="settings.angleSF" :max="180" :min="0" />
 			</toggle-checkbox>
 		</template>
 
@@ -29,12 +29,12 @@ export default {
 	data() {
 		return {
 			settings: {
-				step: 3,
+				step: 4,
 				scale: 1,
 				lengthRatio: 0.33,
+				angle: 60,
 				snowflake: false,
-				height: 245,
-				width: 480
+				angleSF: 68,
 			}
 		}
 	},
@@ -45,17 +45,23 @@ export default {
 			canvas.height = this.height
 
 			if(this.settings.snowflake) {
+				const height = 360 * this.settings.scale
+				const angle = (this.settings.angleSF * Math.PI / 180)
+				const dy = Math.cos(angle / 2) * height
+
 				const pA = {
 					x: 0,
-					y: -this.settings.height * this.settings.scale
+					y: -dy / 2
 				}
+
 				const pB = {
-					x: this.settings.width / 2 * this.settings.scale,
-					y: this.settings.height / 2 * this.settings.scale
+					x: pA.x + Math.cos(-angle/2 + Math.PI/2) * height,
+					y: pA.y + Math.sin(angle/2 + Math.PI/2) * height
 				}
+
 				const pC = {
-					x: -this.settings.width / 2 * this.settings.scale,
-					y: this.settings.height / 2 * this.settings.scale
+					x: pA.x + Math.cos(angle/2 + Math.PI/2) * height,
+					y: pA.y + Math.sin(angle/2 + Math.PI/2) * height
 				}
 
 				this.ctx.translate(this.width / 2, this.height / 2)
@@ -65,44 +71,48 @@ export default {
 				this.koch(pC, pA, this.settings.step)
 
 				return
+			} else {
+				const hspace = (window.innerWidth / 2) - (380 * (this.settings.scale))
+
+				const p0 = {
+					x: hspace,
+					y: this.height * 0.67
+				}
+
+				const p1 = {
+					x: this.width - hspace,
+					y: this.height * 0.67
+				}
+
+				this.koch(p0, p1, this.settings.step)
 			}
-
-			const hspace = (window.innerWidth / 2) - (550 * (this.settings.scale))
-
-			const p0 = {
-				x: hspace,
-				y: this.height * 0.75
-			}
-
-			const p1 = {
-				x: this.width - hspace,
-				y: this.height * 0.75
-			}
-
-			this.koch(p0, p1, this.settings.step)
 		},
 
 		// Koch Recursion Method
 		koch(p0, p1, limit) {
-			const dx = p1.x - p0.x
-			const dy = p1.y - p0.y
+			const dx = (p1.x - p0.x)
+			const dy = (p1.y - p0.y)
 			const dist = Math.sqrt(dx * dx + dy * dy)
 			const unit = dist * this.settings.lengthRatio
 			const angle = Math.atan2(dy, dx)
+			const aLength   = (dist - 2 * unit) / 2
+			const height = -Math.tan(this.degToRad((this.settings.angle / 2) - 90)) * aLength
+			const angleB = -Math.atan2(height, aLength)
+			const hypLength = Math.sqrt(height * height + aLength * aLength)
 
 			const pA = {
 				x: p0.x + dx * this.settings.lengthRatio,
 				y: p0.y + dy * this.settings.lengthRatio
 			}
 
+			const pB = {
+				x: pA.x + Math.cos(angle + angleB) * hypLength,
+				y: pA.y + Math.sin(angle + angleB) * hypLength
+			}
+
 			const pC = {
 				x: p1.x - dx * this.settings.lengthRatio,
 				y: p1.y - dy * this.settings.lengthRatio
-			}
-
-			const pB = {
-				x: pA.x + Math.cos(angle - Math.PI * this.settings.lengthRatio) * unit,
-				y: pA.y + Math.sin(angle - Math.PI * this.settings.lengthRatio) * unit
 			}
 
 			// Recursion Logic
