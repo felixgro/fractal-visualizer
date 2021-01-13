@@ -16,17 +16,14 @@
 </template>
 
 <script>
-/* eslint-disable */
 import ToggleCheckbox from '@/components/form/ToggleCheckbox'
-import Checkbox from '@/components/form/Checkbox'
 import Fractal from '@/mixins/Fractal'
 import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'KochCurve',
 	components: {
-		ToggleCheckbox,
-		Checkbox
+		ToggleCheckbox
 	},
 	mixins: [Fractal, Maths],
 	data() {
@@ -38,7 +35,6 @@ export default {
 				angle: 60,
 				snowflake: false,
 				angleSF: 68,
-				height: 500
 			}
 		}
 	},
@@ -75,21 +71,21 @@ export default {
 				this.koch(pC, pA, this.settings.step)
 
 				return
+			} else {
+				const hspace = (window.innerWidth / 2) - (380 * (this.settings.scale))
+
+				const p0 = {
+					x: hspace,
+					y: this.height * 0.67
+				}
+
+				const p1 = {
+					x: this.width - hspace,
+					y: this.height * 0.67
+				}
+
+				this.koch(p0, p1, this.settings.step)
 			}
-
-			const hspace = (window.innerWidth / 2) - (380 * (this.settings.scale))
-
-			const p0 = {
-				x: hspace,
-				y: this.height * 0.67
-			}
-
-			const p1 = {
-				x: this.width - hspace,
-				y: this.height * 0.67
-			}
-
-			this.koch(p0, p1, this.settings.step)
 		},
 
 		// Koch Recursion Method
@@ -100,9 +96,7 @@ export default {
 			const unit = dist * this.settings.lengthRatio
 			const angle = Math.atan2(dy, dx)
 			const aLength   = (dist - 2 * unit) / 2
-
 			const height = -Math.tan(this.degToRad((this.settings.angle / 2) - 90)) * aLength
-
 			const angleB = -Math.atan2(height, aLength)
 			const hypLength = Math.sqrt(height * height + aLength * aLength)
 
@@ -121,14 +115,6 @@ export default {
 				y: p1.y - dy * this.settings.lengthRatio
 			}
 
-			if(this.settings.showPoints) {
-				this.label(p0, 'p0')
-				this.label(pA, 'pA', true)
-				this.label(pB, 'pB')
-				this.label(pC, 'pC')
-				this.label(p1, 'p1')
-			}
-
 			// Recursion Logic
 			if(limit > 0) {
 				this.koch(p0, pA, limit - 1)
@@ -145,11 +131,6 @@ export default {
 				this.ctx.lineTo(p1.x, p1.y)
 				this.ctx.stroke()
 			}
-		},
-		label(p, title, inverse = false) {
-			this.ctx.font = "10px Arial";
-			this.ctx.fillStyle = "#fff"
-			this.ctx.fillText(title, (!inverse ? p.x + 10 : p.x - 10), p.y - 10)
 		}
 	}
 }
