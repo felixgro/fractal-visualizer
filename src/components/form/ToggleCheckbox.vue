@@ -7,7 +7,7 @@
 				<slot />
 			</div>
 		</transition>
-		<hr>
+		<!--hr-->
 	</div>
 </template>
 
@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style lang="scss">
+	.checkbox {
+		font-size: 12px;
+	}
 	.toggle-checkbox {
 		padding: 0 24px;
 		hr {
