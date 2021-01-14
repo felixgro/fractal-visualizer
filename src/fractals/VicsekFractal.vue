@@ -72,7 +72,7 @@ export default {
 		drawRect(x, y, size) {
 			this.ctx.beginPath()
 			this.ctx.rect(x - (size / 2), y - (size / 2), size, size);
-			this.ctx.fillStyle = '#fff'
+			this.ctx.fillStyle = this.fractalColor
 			this.ctx.fill()
 		}
 	}

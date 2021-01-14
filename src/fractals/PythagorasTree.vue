@@ -42,7 +42,7 @@ export default {
 
 			// Base Branch
 			this.ctx.save()
-			this.ctx.fillStyle = "#FFF";
+			this.ctx.fillStyle = this.fractalColor;
 			this.ctx.translate(x, y)
 			this.ctx.rotate(angle)
 			this.ctx.fillRect(0, 0, size, -size)

@@ -107,7 +107,7 @@ export default {
 
 		// Draws Triangle with 3 given Points
 		drawTriangle(p0, p1, p2) {
-			this.ctx.fillStyle = '#fff'
+			this.ctx.fillStyle = this.fractalColor
 			this.ctx.beginPath()
 			this.ctx.moveTo(p0.x, p0.y)
 			this.ctx.lineTo(p1.x, p1.y)
