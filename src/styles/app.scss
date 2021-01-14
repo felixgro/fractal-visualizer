@@ -36,7 +36,27 @@ body {
 
 .fade-enter-to,
 .fade-leave-from {
+transform-origin: top center;
   transform: ScaleY(1);
+  opacity: 1
+}
+
+.fadeup-enter-active,
+.fadeup-leave-active {
+  transform-origin: bottom center;
+  transition: all 120ms ease;
+}
+
+.fadeup-enter-from,
+.fadeup-leave-to {
+  opacity: 0;
+  transform: ScaleY(.5);
+}
+
+.fadeup-enter-to,
+.fadeup-leave-from {
+  transform: ScaleY(1);
+  transform-origin: bottom center;
   opacity: 1
 }
 

@@ -92,7 +92,7 @@ export default {
 
 			// Base Branch
 			this.ctx.beginPath()
-			this.ctx.strokeStyle = "#FFF";
+			this.ctx.strokeStyle = this.fractalColor
 			this.ctx.moveTo(p0.x, p0.y)
 			this.ctx.lineTo(pA.x, pA.y)
 			this.ctx.stroke()

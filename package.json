@@ -1,7 +1,17 @@
 {
   "name": "fractal",
-  "version": "1.2.0",
+  "version": "1.2.1",
+  "license": "MIT",
   "private": false,
+  "author": {
+    "name": "Felix Grohs",
+    "email": "contact@felixgrohs.at",
+    "url": "https://github.com/felixgro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felixgro/fractal-visualizer"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

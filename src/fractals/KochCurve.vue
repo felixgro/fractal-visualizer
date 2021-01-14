@@ -33,42 +33,40 @@ export default {
 				scale: 1,
 				lengthRatio: 0.33,
 				angle: 60,
-				snowflake: false,
+				snowflake: true,
 				angleSF: 68,
 			}
 		}
 	},
 	methods: {
 		init() {
-			const canvas = this.$refs.canvas
-			canvas.width = this.width
-			canvas.height = this.height
-
 			if(this.settings.snowflake) {
 				const height = 360 * this.settings.scale
-				const angle = (this.settings.angleSF * Math.PI / 180)
-				const dy = Math.cos(angle / 2) * height
+				const angle = this.degToRad(180 - this.settings.angleSF) / 2;
 
-				const pA = {
-					x: 0,
-					y: -dy / 2
+				const p1 = {
+					x: this.width / 2,
+					y: this.height / 2 - 75
 				}
 
-				const pB = {
-					x: pA.x + Math.cos(-angle/2 + Math.PI/2) * height,
-					y: pA.y + Math.sin(angle/2 + Math.PI/2) * height
+				const p2 = {
+					x: p1.x - Math.cos(angle) * height,
+					y: p1.y + Math.sin(angle) * height
 				}
 
-				const pC = {
-					x: pA.x + Math.cos(angle/2 + Math.PI/2) * height,
-					y: pA.y + Math.sin(angle/2 + Math.PI/2) * height
+				const p3 = {
+					x: p1.x + Math.cos(angle) * height,
+					y: p1.y + Math.sin(angle) * height
 				}
 
-				this.ctx.translate(this.width / 2, this.height / 2)
+				const katLength = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y))
+				const dy = (Math.cos(this.degToRad(180 - 90) - angle) * katLength) / 2
 
-				this.koch(pA, pB, this.settings.step)
-				this.koch(pB, pC, this.settings.step)
-				this.koch(pC, pA, this.settings.step)
+				p1.y -= dy
+
+				this.koch(p2, p1, this.settings.step)
+				this.koch(p1, p3, this.settings.step)
+				this.koch(p3, p2, this.settings.step)
 
 				return
 			} else {
@@ -123,7 +121,7 @@ export default {
 				this.koch(pC, p1, limit - 1)
 			} else {
 				this.ctx.beginPath()
-				this.ctx.strokeStyle = "#FFF"
+				this.ctx.strokeStyle = this.fractalColor
 				this.ctx.moveTo(p0.x, p0.y)
 				this.ctx.lineTo(pA.x, pA.y)
 				this.ctx.lineTo(pB.x, pB.y)

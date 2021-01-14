@@ -1,10 +1,25 @@
 <template>
   <div>
     <h1 class="accessable">Fractal Visualizer</h1>
-    <the-header @fractalchange="setFractal" :currentFractal="currentFractal" />
-    <component :is="currentFractal" />
 
-    <the-footer @download="downloadFractal" />
+    <the-header
+      @fractalchange="setFractal"
+      :currentFractal="currentFractal"
+    />
+
+    <component
+      :is="currentFractal"
+      :fractalColor="color"
+      :backgroundColor="colorBG"
+      :drawBG="bg"
+    />
+
+    <the-footer
+      @colorChange="colorChange"
+      @bgChange="bgChange"
+      @colorChangeBG="colorChangeBG"
+    />
+
   </div>
 </template>
 
@@ -16,6 +31,9 @@ export default {
   data() {
     return {
       currentFractal: 'HFractal',
+      color: '#ffffff',
+      colorBG: '#0E0F19',
+      bg: false
     }
   },
   mixins: [SessionStorage],
@@ -41,6 +59,15 @@ export default {
 
       link.href = canvas.toDataURL("image/png")
       link.download = `${this.currentFractal}.png`
+    },
+    bgChange(e) {
+      this.bg = e
+    },
+    colorChange(e) {
+      this.color = e;
+    },
+    colorChangeBG(e) {
+      this.colorBG = e;
     }
   }
 }
