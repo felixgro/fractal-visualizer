@@ -3,7 +3,7 @@
 		<template #settings>
 			<slider label="Step" v-model:current="settings.step" :max="5" :min="0" />
 			<slider label="Scale" v-model:current="settings.scale" :max="2" :min="0" :step="0.01" />
-			<slider label="Angle" v-model:current="settings.angle" :max="90" :min="0" :step="0.01" />
+			<slider label="Angle" v-model:current="settings.angle" :max="180" :min="0" :step="0.01" />
 			<checkbox label="Mirror" v-model:state="settings.mirror"/>
 		</template>
 
@@ -26,7 +26,7 @@ export default {
 			settings: {
 				step: 3,
 				scale: 1,
-				angle: 33.33,
+				angle: 69,
 				mirror: false
 			},
 			radAngle: 0
@@ -36,7 +36,7 @@ export default {
 		init() {
 			const height = 421 * this.settings.scale
 
-			this.radAngle = (this.settings.angle * Math.PI / 180)
+			this.radAngle = (this.settings.angle * Math.PI / 180) / 2
 			const dy = Math.cos(this.radAngle) * height
 			let p0, p1, p2
 
