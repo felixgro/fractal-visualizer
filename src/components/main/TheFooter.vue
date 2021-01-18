@@ -1,25 +1,25 @@
 <template>
 	<footer>
 		<div class="wrapper">
-			<small>{{ ver }}</small>
+			<small><a href="https://github.com/felixgro/fractal-visualizer" target="_blank">Github</a></small>
 			<button class="current-color" @click.passive="open = true">
 				<div ref="bc" class="color bg-color"></div>
 				<div ref="fc" class="color fr-color"></div>
 			</button>
 			<transition name="fadeup">
-			<div class="color-choice" v-show="open">
-				<span class="title" @click.passive="open = false">
-					Styles
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.82 17" ref="icon">
-						<rect class="cls-1" x="9.49" y="6.32" width="19.67" height="4.37" transform="translate(-0.35 16.15) rotate(-45)"/>
-						<rect class="cls-1" x="-1.34" y="6.32" width="19.67" height="4.37" transform="translate(8.5 20.52) rotate(-135)"/>
-					</svg>
-				</span>
-				<color-input label="Fractal Color" v-model:current="fractalColor" />
-				<toggle-checkbox label="Draw Background" v-model:state="background">
-					<color-input label="Background Color" v-model:current="backgroundColor" />
-				</toggle-checkbox>
-			</div>
+				<div class="color-choice" v-show="open">
+					<span class="title" @click.passive="open = false">
+						Styles
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.82 17" ref="icon">
+							<rect class="cls-1" x="9.49" y="6.32" width="19.67" height="4.37" transform="translate(-0.35 16.15) rotate(-45)"/>
+							<rect class="cls-1" x="-1.34" y="6.32" width="19.67" height="4.37" transform="translate(8.5 20.52) rotate(-135)"/>
+						</svg>
+					</span>
+					<color-input label="Fractal Color" v-model:current="fractalColor" />
+					<toggle-checkbox label="Draw Background" v-model:state="background">
+						<color-input label="Background Color" v-model:current="backgroundColor" />
+					</toggle-checkbox>
+				</div>
 			</transition>
 		</div>
 	</footer>
@@ -40,15 +40,11 @@ export default {
 	emits: ['colorChange', 'bgChange', 'colorChangeBG'],
 	data() {
 		return {
-			ver: 'v0.0.0',
 			open: false,
 			fractalColor: '#ffffff',
 			backgroundColor: '#0E0F19',
 			background: false,
 		}
-	},
-	created() {
-		this.getCurrentVersion()
 	},
 	watch: {
 		fractalColor(oldVal, newVal) {
@@ -67,20 +63,6 @@ export default {
 			this.setSession('background-color', newVal)
 			this.$refs.bc.style.background = newVal
 		}
-	},
-	methods: {
-		getCurrentVersion() {
-			const http = new XMLHttpRequest()
-			http.open('GET', 'https://api.github.com/repos/felixgro/fractal-visualizer/releases')
-			http.send()
-
-			http.onreadystatechange = () => {
-				if(http.readyState == 4 && http.status == 200) {
-					const res = JSON.parse(http.response)[0]
-					this.ver = res.tag_name
-				}
-			}
-		}
 	}
 }
 </script>
@@ -98,6 +80,10 @@ export default {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			small a {
+				color: $main;
+				text-decoration: none;
+			}
 			.current-color {
 				background: none;
 				border: none;
