@@ -12,8 +12,6 @@
 
 A simple extendable fractal visualizer written in vue. This project demonstrates the artistic side of math by generating and redrawing fractals based on user defined variables.
 
-Currently converting components to use vue 3's new composition api.. 🏗
-
 [Demo](https://fractal-visualizer.netlify.app/) *(deployed on Netlify)*
 
 ## Available Fractals
