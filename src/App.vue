@@ -15,9 +15,9 @@
     />
 
     <the-footer
-      @colorChange="colorChange"
-      @bgChange="bgChange"
-      @colorChangeBG="colorChangeBG"
+      @colorChange="color = $event"
+      @bgChange="bg = $event"
+      @colorChangeBG="colorBG = $event"
     />
 
   </div>
@@ -28,6 +28,7 @@ import SessionStorage from '@/mixins/SessionStorage'
 
 export default {
   name: 'App',
+
   data() {
     return {
       currentFractal: 'HFractal',
@@ -36,38 +37,35 @@ export default {
       bg: false
     }
   },
+
   mixins: [SessionStorage],
+
   created() {
     if(this.getCurrentFractal())
       this.setFractal(this.getCurrentFractal())
   },
+
   methods: {
     setFractal(e) {
       this.currentFractal = e
 
       this.setCurrentFractal(this.currentFractal)
     },
+
     getCurrentFractal() {
       return this.getSession('fractal')
     },
+
     setCurrentFractal(fractal) {
       this.setSession('fractal', fractal)
     },
+
     downloadFractal() {
       const link = document.querySelector('#downloadLink')
       const canvas = document.querySelector('#canvas')
 
       link.href = canvas.toDataURL("image/png")
       link.download = `${this.currentFractal}.png`
-    },
-    bgChange(e) {
-      this.bg = e
-    },
-    colorChange(e) {
-      this.color = e;
-    },
-    colorChangeBG(e) {
-      this.colorBG = e;
     }
   }
 }

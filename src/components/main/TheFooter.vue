@@ -9,12 +9,16 @@
 			<transition name="fadeup">
 				<div class="color-choice" v-show="open">
 					<span class="title" @click.passive="open = false">
-						Styles
+						Change Styles
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.82 17" ref="icon">
 							<rect class="cls-1" x="9.49" y="6.32" width="19.67" height="4.37" transform="translate(-0.35 16.15) rotate(-45)"/>
 							<rect class="cls-1" x="-1.34" y="6.32" width="19.67" height="4.37" transform="translate(8.5 20.52) rotate(-135)"/>
 						</svg>
 					</span>
+
+					<color-choice label="Fractal Color" v-model:current="fractalColor" :none="true" />
+					<color-choice label="Background" :none="true" />
+
 					<color-input label="Fractal Color" v-model:current="fractalColor" />
 					<toggle-checkbox label="Draw Background" v-model:state="background">
 						<color-input label="Background Color" v-model:current="backgroundColor" />
@@ -27,6 +31,7 @@
 
 <script>
 import ColorInput from '@/components/form/ColorInput'
+import ColorChoice from '@/components/form/ColorChoice'
 import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import SessionStorage from '@/mixins/SessionStorage'
 
@@ -34,7 +39,8 @@ export default {
 	name: 'TheFooter',
 	components: {
 		ColorInput,
-		ToggleCheckbox
+		ToggleCheckbox,
+		ColorChoice
 	},
 	mixins: [SessionStorage],
 	emits: ['colorChange', 'bgChange', 'colorChangeBG'],
@@ -47,18 +53,19 @@ export default {
 		}
 	},
 	watch: {
-		fractalColor(oldVal, newVal) {
+		fractalColor(old, newVal) {
+			console.log('newVal!')
 			if(!this.$refs.fc)
 				return
 			this.$emit('colorChange', newVal)
 			this.setSession('fractal-color', newVal)
 			this.$refs.fc.style.background = newVal
 		},
-		background(oldVal, newVal) {
+		background(old, newVal) {
 			this.$emit('bgChange', !newVal)
 			this.setSession('draw-background', !newVal)
 		},
-		backgroundColor(oldVal, newVal) {
+		backgroundColor(old, newVal) {
 			this.$emit('colorChangeBG', newVal)
 			this.setSession('background-color', newVal)
 			this.$refs.bc.style.background = newVal

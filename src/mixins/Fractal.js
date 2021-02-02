@@ -7,11 +7,13 @@ export default {
 			height: null
 		}
 	},
+
 	props: {
 		fractalColor: String,
 		backgroundColor: String,
 		drawBG: Boolean
 	},
+
 	// Watch Settings Update
 	watch: {
 		settings: {
@@ -21,10 +23,12 @@ export default {
 			}
 		}
 	},
+
 	// Redraw if color changed
 	updated() {
 		this._init()
 	},
+
 	mounted() {
 		const canvas = this.$refs.canvas
 
@@ -54,6 +58,7 @@ export default {
 			this._init()
 		}
 	},
+
 	methods: {
 		_init() {
 			// Clear & Update Fractal
