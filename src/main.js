@@ -1,10 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import store from './store'
 
-const app = createApp(App)
+const app = createApp(App).use(store)
+
+// add PWA support
+import './registerServiceWorker'
 
 
-// Main Components
+// Main components
 import TheMenu from '@/components/main/TheMenu'
 import TheHeader from '@/components/main/TheHeader'
 import TheFooter from '@/components/main/TheFooter'
@@ -14,19 +18,22 @@ app.component('TheHeader', TheHeader)
 app.component('TheFooter', TheFooter)
 
 
-// Settings Components
+// Form Components
 import Slider from '@/components/form/Slider'
+import Checkbox from '@/components/form/Checkbox'
+import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 
 app.component('Slider', Slider)
+app.component('Checkbox', Checkbox)
+app.component('ToggleCheckbox', ToggleCheckbox)
 
 
 // Fractal Components
-import { FractalComponents } from '@/config/FractalList'
 import FractalLayout from '@/components/layouts/FractalLayout'
-import './registerServiceWorker'
+import { FractalComponents } from '@/config/FractalList'
 
-FractalComponents.forEach(component => app.component(component.name, component))
 app.component('FractalLayout', FractalLayout)
+FractalComponents.forEach(component => app.component(component.name, component))
 
 
 app.mount('#app')

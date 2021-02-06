@@ -16,16 +16,14 @@
 </template>
 
 <script>
-import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'KochCurve',
-	components: {
-		ToggleCheckbox
-	},
+
 	mixins: [Fractal, Maths],
+
 	data() {
 		return {
 			settings: {
@@ -33,11 +31,12 @@ export default {
 				scale: 1,
 				lengthRatio: 0.33,
 				angle: 60,
-				snowflake: true,
-				angleSF: 68,
+				snowflake: false,
+				angleSF: 90,
 			}
 		}
 	},
+
 	methods: {
 		init() {
 			if(this.settings.snowflake) {
@@ -68,7 +67,6 @@ export default {
 				this.koch(p1, p3, this.settings.step)
 				this.koch(p3, p2, this.settings.step)
 
-				return
 			} else {
 				const hspace = (window.innerWidth / 2) - (380 * (this.settings.scale))
 
@@ -121,7 +119,7 @@ export default {
 				this.koch(pC, p1, limit - 1)
 			} else {
 				this.ctx.beginPath()
-				this.ctx.strokeStyle = this.fractalColor
+				this.ctx.strokeStyle = this.color
 				this.ctx.moveTo(p0.x, p0.y)
 				this.ctx.lineTo(pA.x, pA.y)
 				this.ctx.lineTo(pB.x, pB.y)

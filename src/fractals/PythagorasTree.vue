@@ -16,9 +16,9 @@ import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'PythagorasTree',
-	components: {
-	},
+
 	mixins: [Fractal, Maths],
+
 	data() {
 		return {
 			settings: {
@@ -29,6 +29,7 @@ export default {
 			}
 		}
 	},
+
 	methods: {
 		init() {
 			this.settings.angleA = this.degToRad(-this.settings.angleDeg)
@@ -42,7 +43,7 @@ export default {
 
 			// Base Branch
 			this.ctx.save()
-			this.ctx.fillStyle = this.fractalColor;
+			this.ctx.fillStyle = this.color;
 			this.ctx.translate(x, y)
 			this.ctx.rotate(angle)
 			this.ctx.fillRect(0, 0, size, -size)
