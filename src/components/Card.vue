@@ -14,14 +14,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-	.card {
-		width: 250px;
-		box-sizing: border-box;
-		padding: 18px 24px;
-		padding: 10px 15px;
-		background: $layer-1;
-		box-shadow: $shadow-1;
-	}
-</style>

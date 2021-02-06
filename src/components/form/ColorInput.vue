@@ -1,5 +1,5 @@
 <template>
-	<div class="form-field">
+	<div class="form-field color-input">
 		<p>{{ label }}</p>
 		<div class="colors">
 			<div class="color" v-for="c in colors" :key="c" :style="'background:' + c" @click="selectColor" :class="proxyCurrent == c ? 'current' : ''" />
@@ -34,35 +34,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-p {
-	color: $label-color;
-	font-size: 12px;
-	font-weight: 600;
-	margin-bottom: 7px;
-}
-
-.colors {
-	display: flex;
-	justify-content: space-between;
-}
-
-.color {
-	height: 25px;
-	min-width: 15px;
-	width: 100%;
-	margin: 0 5px;
-	cursor: pointer;
-	&:first-of-type {
-		margin-left: 0;
-	}
-	&:last-of-type {
-		margin-right: 0;
-	}
-}
-
-.color.current {
-	outline: 2px solid #4f5272;
-}
-</style>

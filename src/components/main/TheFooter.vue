@@ -30,33 +30,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-	footer {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		font-size: .9em;
-		width: 100%;
-		box-sizing: border-box;
-		padding: 15px 0;
-		z-index: 200;
-		.wrapper {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			small a {
-				color: $main;
-				text-decoration: none;
-			}
-			.actions {
-				display: flex;
-				align-items: center;
-				small a {
-					margin-right: 15px;
-				}
-			}
-		}
-	}
-
-</style>

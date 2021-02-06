@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="fractal-layout">
 		<the-menu>
 			<slot name="settings" />
 		</the-menu>
@@ -8,17 +8,6 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FractalLayout'
-}
-</script>
-
 <style lang="scss">
-	canvas {
-		position: fixed;
-		width: 100vw;
-		height: 100%;
-		z-index: -1;
-	}
+// Comment needed for automated SCSS import!
 </style>

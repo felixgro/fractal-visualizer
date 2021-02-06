@@ -1,0 +1,235 @@
+/**
+		CHECKBOX
+**/
+
+label.checkbox {
+	position: relative;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	color: $label-color;
+	input {
+		display: none;
+		&:checked ~ span {
+			&::after {
+				transform: translate(-50%, -50%) scaleY(1);
+			}
+		}
+	}
+	span {
+		width: $cb-size;
+		height: $cb-size;
+		display: inline-block;
+		background: $slider-track;
+		margin-right: 12px;
+		position: relative;
+		&::after {
+			content: "";
+			position: absolute;
+			width: $cb-fill-size;
+			height: $cb-fill-size;
+			top: 50%;
+			left: 50%;
+			transition: all 60ms ease-out;
+			transform-origin: top center;
+			transform: translate(-50%, -50%) scaleY(0);
+			background: $slider-thumb;
+		}
+	}
+}
+
+
+/**
+		Color Input
+**/
+
+.color-input {
+	p {
+		color: $label-color;
+		font-size: 12px;
+		font-weight: 600;
+		margin-bottom: 7px;
+	}
+	.colors {
+		display: flex;
+		justify-content: space-between;
+	}
+	.color {
+		height: 25px;
+		min-width: 15px;
+		width: 100%;
+		margin: 0 5px;
+		cursor: pointer;
+		&:first-of-type {
+			margin-left: 0;
+		}
+		&:last-of-type {
+			margin-right: 0;
+		}
+		&.current {
+			outline: 2px solid #4f5272;
+		}
+	}
+}
+
+
+/**
+		DROPDOWN
+**/
+
+.dropdown {
+	position: relative;
+	color: inherit;
+	font-size: .9em;
+	padding: 10px 20px;
+	width: 230px;
+	box-sizing: border-box;
+	font-family: inherit;
+	background: $layer-1;
+	cursor: pointer;
+	.current {
+		font-weight: 700;
+		color: $dd-current;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		svg {
+			height: 7px;
+			transform: rotate(0deg);
+			transition: transform 90ms ease-out;
+			rect {
+				fill: $plus-icon;
+			}
+			&.open {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	.options {
+		position: absolute;
+		padding-top: 12px;
+		width: inherit;
+		left: 0;
+		z-index: -1;
+		background: $layer-1;
+		box-shadow: $shadow-1;
+		.option-wrapper {
+			.option {
+				font-weight: 700;
+				padding: 6px 20px;
+				color: $label-color;
+				cursor: pointer;
+				transition: all 90ms ease-out;
+				&:hover {
+					color: $dd-current;
+					background: $dd-hover-bg;
+				}
+			}
+		}
+	}
+}
+
+
+/**
+		SLIDER
+**/
+
+.slider {
+	.form-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		label {
+			color: $label-color;
+			display: block;
+			flex: 1;
+		}
+		input[type="number"] {
+			width: 50px;
+			-moz-appearance: textfield;
+			text-align: right;
+			font-size: 9pt;
+			background: none;
+			font-family: inherit;
+			font-weight: 400;
+			border: none;
+			color: inherit;
+			&:focus {
+				border: none;
+				outline: none;
+			}
+			&::-webkit-inner-spin-button,
+			&::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		}
+	}
+
+	input[type="range"] {
+		position: relative;
+		width: 100%;
+		margin-top: 5px;
+		background: none;
+		&::-moz-range-track {
+			background: $slider-track;
+			height: 16px;
+		}
+		&::after {
+			content: '';
+			position: absolute;
+			z-index: -1;
+			width: 100%;
+			height: 16px;
+			background: $slider-track;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		-webkit-appearance: none;
+		&:focus {
+			outline: none;
+			&::-webkit-slider-thumb {
+				background: $gradient !important;
+			}
+		}
+		&::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 18px;
+			height: 24px;
+			background: $slider-thumb !important;
+			border: none;
+			cursor: pointer;
+		}
+		&::-moz-range-thumb {
+			width: 18px;
+			height: 24px;
+			background: $slider-thumb;
+			border: none;
+			border-radius: 0;
+			cursor: pointer;
+		}
+	}
+}
+
+
+/**
+		TOGGLE-CHECKBOX
+**/
+
+.toggle-checkbox {
+	padding: 0 24px;
+	hr {
+		border: 1px solid hsl(235, 18%, 38%);
+		opacity: .1;
+		&:last-of-type {
+			margin-bottom: 12px;
+		}
+	}
+	.form-field {
+		margin-bottom: 12px;
+		&.checkbox {
+			margin-top: 12px;
+		}
+	}
+}

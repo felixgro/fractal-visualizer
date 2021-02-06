@@ -49,27 +49,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-	header {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		box-sizing: border-box;
-		padding: 10px 0;
-		z-index: 100;
-		.wrapper {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			svg {
-				height: 32px;
-				margin-top: 5px;
-				path {
-					fill: url(#main_gradient);
-				}
-			}
-		}
-	}
-</style>

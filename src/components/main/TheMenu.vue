@@ -1,28 +1,30 @@
 <template>
-	<card ref="card">
-		<div class="top-bar noselect" @click.passive="toggleMenu" @mousedown.passive="dragStart" @touchstart.passive="dragStart">
-			<span class="title">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.95 25.37">
-					<rect class="cls-1" width="6.53" height="6.53"/>
-					<rect class="cls-1" y="9.42" width="6.53" height="6.53"/>
-					<rect class="cls-1" y="18.84" width="6.53" height="6.53"/>
-					<rect class="cls-1" x="9.42" width="6.53" height="6.53"/>
-					<rect class="cls-1" x="9.42" y="9.42" width="6.53" height="6.53"/>
-					<rect class="cls-1" x="9.42" y="18.84" width="6.53" height="6.53"/>
-				</svg>
-				Settings
-			</span>
-			<div class="icon" ref="icon">
-				<div class="line"></div>
-				<div class="line"></div>
+	<div class="menu">
+		<card ref="card">
+			<div class="top-bar noselect" @click.passive="toggleMenu" @mousedown.passive="dragStart" @touchstart.passive="dragStart">
+				<span class="title">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.95 25.37">
+						<rect class="cls-1" width="6.53" height="6.53"/>
+						<rect class="cls-1" y="9.42" width="6.53" height="6.53"/>
+						<rect class="cls-1" y="18.84" width="6.53" height="6.53"/>
+						<rect class="cls-1" x="9.42" width="6.53" height="6.53"/>
+						<rect class="cls-1" x="9.42" y="9.42" width="6.53" height="6.53"/>
+						<rect class="cls-1" x="9.42" y="18.84" width="6.53" height="6.53"/>
+					</svg>
+					Settings
+				</span>
+				<div class="icon" ref="icon">
+					<div class="line"></div>
+					<div class="line"></div>
+				</div>
 			</div>
-		</div>
-		<transition name="fade">
-			<div v-show="open" class="noselect">
-				<slot />
-			</div>
-		</transition>
-	</card>
+			<transition name="fade">
+				<div v-show="open" class="noselect">
+					<slot />
+				</div>
+			</transition>
+		</card>
+	</div>
 </template>
 
 <script>
@@ -175,77 +177,77 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.top-bar {
+.top-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	padding: 14px 24px;
+	span.title {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		cursor: pointer;
-		padding: 14px 24px;
-		span.title {
-			display: flex;
-			align-items: center;
-			color: $label-color;
-			font-weight: 700;
-			font-size: 1em;
-			svg {
-				height: 15px;
-				margin-right: 12px;
-				rect {
-					fill: $drag-icon;
-				}
+		color: $label-color;
+		font-weight: 700;
+		font-size: 1em;
+		svg {
+			height: 15px;
+			margin-right: 12px;
+			rect {
+				fill: $drag-icon;
 			}
 		}
-		.icon {
-			position: relative;
-			height: 12px;
+	}
+	.icon {
+		position: relative;
+		height: 12px;
+		width: 12px;
+		margin-top: 2px;
+		.line {
+			position: absolute;
+			height: 2px;
 			width: 12px;
-			margin-top: 2px;
+			background: $plus-icon;
+			transition: all 120ms ease-out;
+			&:first-of-type {
+				margin-top: 8px;
+			}
+			&:last-of-type {
+				transform: rotate(90deg) scaleX(0);
+				margin-top: 4px;
+			}
+		}
+		&.open {
 			.line {
-				position: absolute;
-				height: 2px;
-				width: 12px;
-				background: $plus-icon;
-				transition: all 120ms ease-out;
 				&:first-of-type {
-					margin-top: 8px;
-				}
-				&:last-of-type {
-					transform: rotate(90deg) scaleX(0);
 					margin-top: 4px;
 				}
-			}
-			&.open {
-				.line {
-					&:first-of-type {
-						margin-top: 4px;
-					}
-					&:last-of-type {
-						transform: rotate(90deg) scaleX(.95);
-					}
+				&:last-of-type {
+					transform: rotate(90deg) scaleX(.95);
 				}
 			}
 		}
+	}
 
+}
+.form-field {
+	margin-bottom: 12px;
+	padding: 0 24px;
+	&:first-of-type {
+		margin-top: 16px;
 	}
-	.form-field {
-		margin-bottom: 12px;
-		padding: 0 24px;
-		&:first-of-type {
-			margin-top: 16px;
-		}
-		&:last-of-type {
-			margin-bottom: 24px;
-		}
+	&:last-of-type {
+		margin-bottom: 24px;
 	}
-	div {
-		font-size: 9pt;
-		font-weight: 600;
-		.card {
-			z-index: 50;
-			position: fixed;
-			top: 50px;
-			left: 50px;
-			padding: 0;
-		}
+}
+div {
+	font-size: 9pt;
+	font-weight: 600;
+	.card {
+		z-index: 50;
+		position: fixed;
+		top: 50px;
+		left: 50px;
+		padding: 0;
 	}
+}
 </style>

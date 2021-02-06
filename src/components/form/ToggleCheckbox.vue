@@ -46,25 +46,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss">
-	.checkbox {
-		font-size: 12px;
-	}
-	.toggle-checkbox {
-		padding: 0 24px;
-		hr {
-			border: 1px solid hsl(235, 18%, 38%);
-			opacity: .1;
-			&:last-of-type {
-				margin-bottom: 12px;
-			}
-		}
-		.form-field {
-			margin-bottom: 12px;
-			&.checkbox {
-				margin-top: 12px;
-			}
-		}
-	}
-</style>

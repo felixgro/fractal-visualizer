@@ -1,4 +1,6 @@
 @import '_variables';
+@import 'form';
+@import 'menues';
 
 * {
 	margin: 0;
@@ -27,6 +29,71 @@ body {
 	width: 100%;
 	max-width: 1400px;
 	margin: 0 auto;
+}
+
+canvas {
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  z-index: -1;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 0;
+  z-index: 100;
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg {
+      height: 32px;
+      margin-top: 5px;
+      path {
+        fill: url(#main_gradient);
+      }
+    }
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  font-size: .9em;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 0;
+  z-index: 200;
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    small a {
+      color: $main;
+      text-decoration: none;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      small a {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.card {
+  width: 250px;
+  box-sizing: border-box;
+  padding: 18px 24px;
+  padding: 10px 15px;
+  background: $layer-1;
+  box-shadow: $shadow-1;
 }
 
 // Fade Transition
