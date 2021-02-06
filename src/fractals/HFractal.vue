@@ -17,16 +17,14 @@
 </template>
 
 <script>
-import ToggleCheckbox from '@/components/form/ToggleCheckbox'
 import Fractal from '@/mixins/Fractal'
 import Maths from '@/mixins/Maths'
 
 export default {
 	name: 'HFractal',
-	components: {
-		ToggleCheckbox
-	},
+
 	mixins: [Fractal, Maths],
+
 	data() {
 		return {
 			settings: {
@@ -41,6 +39,7 @@ export default {
 			}
 		}
 	},
+
 	methods: {
 		init() {
 			const p0 = {
@@ -92,7 +91,7 @@ export default {
 
 			// Base Branch
 			this.ctx.beginPath()
-			this.ctx.strokeStyle = this.fractalColor
+			this.ctx.strokeStyle = this.color
 			this.ctx.moveTo(p0.x, p0.y)
 			this.ctx.lineTo(pA.x, pA.y)
 			this.ctx.stroke()

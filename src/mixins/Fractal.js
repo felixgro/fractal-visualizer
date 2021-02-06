@@ -1,3 +1,5 @@
+
+
 export default {
 	// Canvas Data
 	data() {
@@ -7,11 +9,16 @@ export default {
 			height: null
 		}
 	},
-	props: {
-		fractalColor: String,
-		backgroundColor: String,
-		drawBG: Boolean
+
+	computed: {
+		color() {
+			return this.$store.state.color
+		},
+		bg() {
+			return this.$store.state.bg
+		}
 	},
+
 	// Watch Settings Update
 	watch: {
 		settings: {
@@ -19,12 +26,15 @@ export default {
 			handler: function() {
 				this._init()
 			}
+		},
+		color() {
+			this._init()
+		},
+		bg() {
+			this._init()
 		}
 	},
-	// Redraw if color changed
-	updated() {
-		this._init()
-	},
+
 	mounted() {
 		const canvas = this.$refs.canvas
 
@@ -54,24 +64,20 @@ export default {
 			this._init()
 		}
 	},
+
 	methods: {
 		_init() {
 			// Clear & Update Fractal
 			this.ctx.clearRect(0, 0, this.width, this.height)
 
 			// Background
-			if(this.drawBG) {
+			if(this.$store.state.bg) {
 				this.ctx.rect(0, 0, this.width, this.height)
-				this.ctx.fillStyle = this.backgroundColor
+				this.ctx.fillStyle = this.$store.state.bg
 				this.ctx.fill()
 			}
 
 			this.init()
-		},
-
-		fractalError(msg) {
-			// eslint-disable-next-line
-			console.error(`[${this.$options.name}] ${msg}`)
 		},
 
 		setDimensions(canvas) {
@@ -82,12 +88,9 @@ export default {
 			canvas.height = this.height
 		},
 
-		getStyles() {
-			return {
-				fractalColor: sessionStorage.getItem('fractal-color'),
-				bgCoolor: sessionStorage.getItem('background-color'),
-				bg: sessionStorage.getItem('draw-background'),
-			}
+		fractalError(msg) {
+			// eslint-disable-next-line
+			console.error(`[${this.$options.name}] ${msg}`)
 		}
 	}
 }

@@ -13,14 +13,12 @@
 
 <script>
 import Fractal from '@/mixins/Fractal'
-import Checkbox from '@/components/form/Checkbox'
 
 export default {
 	name: 'SierpinskiTriangle',
-	components: {
-		Checkbox
-	},
+
 	mixins: [Fractal],
+
 	data() {
 		return {
 			settings: {
@@ -32,6 +30,7 @@ export default {
 			radAngle: 0
 		}
 	},
+
 	methods: {
 		init() {
 			const height = 421 * this.settings.scale
@@ -107,7 +106,7 @@ export default {
 
 		// Draws Triangle with 3 given Points
 		drawTriangle(p0, p1, p2) {
-			this.ctx.fillStyle = this.fractalColor
+			this.ctx.fillStyle = this.color
 			this.ctx.beginPath()
 			this.ctx.moveTo(p0.x, p0.y)
 			this.ctx.lineTo(p1.x, p1.y)

@@ -7,18 +7,18 @@
 		</template>
 
 		<canvas ref="canvas" id="canvas" />
+
 	</fractal-layout>
 </template>
 
 <script>
 import Fractal from '@/mixins/Fractal'
-import Checkbox from '@/components/form/Checkbox'
+
 export default {
 	name: 'VicsekFractal',
+
 	mixins: [Fractal],
-	components: {
-		Checkbox
-	},
+
 	data() {
 		return {
 			settings: {
@@ -28,6 +28,7 @@ export default {
 			}
 		}
 	},
+
 	methods: {
 		init() {
 			const centerX = this.width / 2
@@ -39,6 +40,7 @@ export default {
 				this.saltire(centerX, centerY, this.settings.scale * 150, this.settings.step)
 			}
 		},
+
 		vicsek(x, y, size, limit) {
 			if(limit > 0) {
 				this.vicsek(x, y, size / 3, limit - 1)
@@ -54,6 +56,7 @@ export default {
 				this.drawRect(x, y - size, size)
 			}
 		},
+
 		saltire(x, y, size, limit) {
 			if(limit > 0) {
 				this.saltire(x, y, size / 3, limit - 1)
@@ -69,10 +72,11 @@ export default {
 				this.drawRect(x - size, y + size, size)
 			}
 		},
+
 		drawRect(x, y, size) {
 			this.ctx.beginPath()
 			this.ctx.rect(x - (size / 2), y - (size / 2), size, size);
-			this.ctx.fillStyle = this.fractalColor
+			this.ctx.fillStyle = this.color
 			this.ctx.fill()
 		}
 	}
