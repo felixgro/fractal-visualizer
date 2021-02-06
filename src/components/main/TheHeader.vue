@@ -17,7 +17,7 @@
 				</svg>
 			</div>
 			<div>
-				<dropdown :options="fractals" :current="currentFractal" @selected="$emit('fractalchange', $event)" />
+				<dropdown :options="fractals" :current="currentFractal" @selected="selectFractal" />
 			</div>
 		</div>
 	</header>
@@ -32,16 +32,20 @@ export default {
 	components: {
 		Dropdown
 	},
-	props: {
-		currentFractal: String
-	},
 	data() {
 		return {
+			currentFractal: null,
 			fractals: []
 		}
 	},
 	created() {
+		this.currentFractal = this.$store.state.fractal
 		this.fractals = FractalList
+	},
+	methods: {
+		selectFractal(e) {
+			this.$store.commit('setFractal', e)
+		}
 	}
 }
 </script>
@@ -54,7 +58,7 @@ export default {
 		width: 100%;
 		box-sizing: border-box;
 		padding: 10px 0;
-		z-index: 15000;
+		z-index: 100;
 		.wrapper {
 			display: flex;
 			justify-content: space-between;

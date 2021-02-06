@@ -1,61 +1,68 @@
 <template>
 	<div class="form-field">
-		<input :id="uid" type="color" v-model="inputVal">
-		<label :for="uid">{{ label }}</label>
+		<p>{{ label }}</p>
+		<div class="colors">
+			<div class="color" v-for="c in colors" :key="c" :style="'background:' + c" @click="selectColor" :class="proxyCurrent == c ? 'current' : ''" />
+		</div>
 	</div>
 </template>
 
 <script>
 export default {
 	props: {
-		current: {
-			type: String,
-			required: true
-		},
-		label: {
-			type: String
-		}
+		label: String,
+		colors: Array,
+		storeKey: String
 	},
-	data() {
-		return {
-			uid: null
-		}
-	},
-	created() {
-		this.uid = this.$.uid
-	},
+
 	computed: {
-		inputVal: {
+		proxyCurrent: {
 			get() {
-				return this.current
+				return this.$store.state[this.storeKey]
 			},
 			set(val) {
-				this.$emit('update:current', val);
+				const mutationMethod = 'set' + this.storeKey.charAt(0).toUpperCase() + this.storeKey.slice(1)
+				this.$store.commit(mutationMethod, val)
 			}
+		}
+	},
+
+	methods: {
+		selectColor(e) {
+			this.proxyCurrent = e.target.style.background
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-.form-field {
-	margin: 6px 0;
+p {
+	color: $label-color;
+	font-size: 12px;
+	font-weight: 600;
+	margin-bottom: 7px;
+}
+
+.colors {
 	display: flex;
-	align-items: center;
+	justify-content: space-between;
+}
+
+.color {
+	height: 25px;
+	min-width: 15px;
+	width: 100%;
+	margin: 0 5px;
 	cursor: pointer;
-	input {
-		background: none;
-		outline: none;
-		border: none;
-		position: relative;
-		height: 28px;
-		width: 32px;
+	&:first-of-type {
+		margin-left: 0;
 	}
-	label {
-		color: $label-color;
-		padding-left: 10px;
-		font-size: 12px;
-		font-weight: 600;
+	&:last-of-type {
+		margin-right: 0;
 	}
+}
+
+.color.current {
+	outline: 2px solid #4f5272;
 }
 </style>

@@ -241,7 +241,7 @@ export default {
 		font-size: 9pt;
 		font-weight: 600;
 		.card {
-			z-index: 10000;
+			z-index: 50;
 			position: fixed;
 			top: 50px;
 			left: 50px;

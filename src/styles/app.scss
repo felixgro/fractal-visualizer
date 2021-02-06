@@ -12,6 +12,14 @@ body {
 	overflow: hidden;
 }
 
+#app {
+  font-family: 'Roboto Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $font-color;
+  font-size: $font-size;
+}
+
 .wrapper {
 	position: relative;
 	box-sizing: border-box;
@@ -68,11 +76,6 @@ transform-origin: top center;
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-}
-
-.download-button {
-	z-index: 100;
-	position: fixed;
 }
 
 ::-moz-selection {
