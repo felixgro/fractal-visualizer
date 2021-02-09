@@ -1,9 +1,11 @@
 <p align="center">
 	<img width="75" height="75" src="src/assets/logo.png">
 </p>
+
 <p align="center">
 	<b>Fractal Visualizer</b>
 </p>
+
 <p align="center">
 	<img src="https://img.shields.io/github/package-json/v/felixgro/fractal-visualizer?color=%23b84961" alt="Version">
 	<img src="https://img.shields.io/github/license/felixgro/fractal-visualizer?color=b84961" alt="License">
